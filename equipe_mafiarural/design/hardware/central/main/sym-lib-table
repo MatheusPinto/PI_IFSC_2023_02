@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "esp")(type "KiCad")(uri "/home/joao/Development/Faculdade/nivea/pi2/design/hardware/central/lib/symbol/esp.kicad_sym")(options "")(descr ""))
+  (lib (name "PI")(type "KiCad")(uri "/home/joao/Development/Faculdade/nivea/pi2/design/hardware/central/lib/symbol/MQ-5.kicad_sym")(options "")(descr ""))
+)
