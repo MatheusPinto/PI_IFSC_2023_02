@@ -43,7 +43,7 @@
 
 ## Introdução
 
-Este documento detalha o design do projeto de um sistema de monitoramento de vazamento de gás de cozinha. O sistema será composto por um módulo central e módulos de sensoriamento.
+Este documento detalha o design do projeto de um sistema de monitoramento de vazamento de gás de cozinha. O sistema será composto por um módulo central e dois módulos de sensoriamento.
 
 
 ## Esquemático de Funcionamento
@@ -80,7 +80,7 @@ O esquemático abaixo ilustra como funcionará a lógica do sistema. No caso des
 
 ### Módulo Central
 
-O módulo central terá entrada de 5-12V e estará posicionada dentro do quadro de distribuição da residência. Para fazer o controle será utilizado um módulo de relés. Para o mantimento da alimentação após o corte de energia haverá uma célula Li-ion de 3.7V, sendo possível a expansão em paralelo para aumentar a capacidade de armazenamento.
+O módulo central terá entrada de 5 -12V e estará posicionada dentro do quadro de distribuição da residência. Para fazer o controle será utilizado um módulo de relés. Para o mantimento da alimentação após o corte de energia haverá uma célula Li-ion de 3.7V, sendo possível a expansão em paralelo para aumentar a capacidade de armazenamento.
 
 <img src="./hardware/central/imgs/layout.png" alt="PCB Central" height="300px"/>
 <img src="./hardware/central/imgs/preview-top.png" alt="PCB Central" height="300px"/>
