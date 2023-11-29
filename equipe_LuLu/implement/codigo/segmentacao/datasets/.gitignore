@@ -1,0 +1,11 @@
+# Pasta com os datasets
+imagens-dataset/*
+!/imagens-dataset/.gitkeep
+
+# Datasets do Tensorflow
+treino
+validacao
+
+# Computação gráfica
+blender-output
+*.blend1
