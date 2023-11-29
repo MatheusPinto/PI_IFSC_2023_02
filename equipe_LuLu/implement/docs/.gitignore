@@ -1,0 +1,3 @@
+# Arquivos gerados pelo sphinx que não serão usados na documentação
+_build/doctrees
+/_autosummary
