@@ -7,9 +7,9 @@ O projeto consistem em conceber, desenvolver, implementar e operar um robô Wall
 
 O projeto foi desenvolvido utilizando a iniciativa CDIO, um framework educacional baseado na aprendizagem ativa com foco na resolução de problemas. Mais informações estão disponíveis no site oficial da iniciativa: [http://www.cdio.org/](http://www.cdio.org/)). Baseado nas etapas do CDIO, o projeto está dividido nos seguintes tópicos:
 
-- [Concepção](conceive/README.md)
-- Desenvolvimento
-- Implementação
+- [Concepção](conceive)
+- [Desenvolvimento](design)
+- [Implementação](implement)
 - Operacionalização
 
 
