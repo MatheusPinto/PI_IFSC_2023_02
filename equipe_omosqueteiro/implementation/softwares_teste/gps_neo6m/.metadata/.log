@@ -1,0 +1,69 @@
+!SESSION 2023-11-29 00:43:46.027 -----------------------------------------------
+eclipse.buildId=Version 1.13.2
+java.version=17.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-11-29 00:44:31.574
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-11-29 00:44:31.582
+!MESSAGE Log4j2 initialized with config file C:\Users\marce\Documents\STM32 TESTES\gps_neo6m\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-11-29 00:44:35.436
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-11-29 00:46:00.264
+!MESSAGE Indexed 'gps_neo6m' (17 sources, 78 headers) in 4.14 sec: 3,643 declarations; 13,251 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.012%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-11-29 01:04:35.556
+!MESSAGE Indexed 'gps_neo6m' (20 sources, 86 headers) in 1.03 sec: 4,547 declarations; 18,240 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0088%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-11-29 01:04:38.495
+!MESSAGE Indexed 'gps_neo6m' (20 sources, 86 headers) in 0.755 sec: 4,547 declarations; 18,240 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0088%)
+!SESSION 2023-11-29 01:47:08.729 -----------------------------------------------
+eclipse.buildId=Version 1.13.2
+java.version=17.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-11-29 01:47:20.806
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-11-29 01:47:20.808
+!MESSAGE Log4j2 initialized with config file C:\Users\marce\Documents\STM32 TESTES\gps_neo6m\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-11-29 01:47:28.222
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2023-11-29 15:52:06.598 -----------------------------------------------
+eclipse.buildId=Version 1.13.2
+java.version=17.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-11-29 15:52:24.141
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-11-29 15:52:24.153
+!MESSAGE Log4j2 initialized with config file C:\Users\marce\Documents\STM32 TESTES\gps_neo6m\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-11-29 15:52:32.126
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2023-11-29 18:49:45.240 -----------------------------------------------
+eclipse.buildId=Version 1.13.2
+java.version=17.0.6
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-11-29 18:50:47.195
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-11-29 18:50:47.195
+!MESSAGE Log4j2 initialized with config file C:\Users\marce\Documents\STM32 TESTES\gps_neo6m\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-11-29 18:50:54.487
+!MESSAGE Started RMI Server, listening on port 41337

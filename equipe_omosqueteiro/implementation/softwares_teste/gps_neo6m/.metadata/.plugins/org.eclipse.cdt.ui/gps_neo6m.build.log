@@ -1,0 +1,10 @@
+19:23:44 **** Incremental Build of configuration Debug for project gps_neo6m ****
+make -j16 all 
+arm-none-eabi-size   gps_neo6m.elf 
+   text	   data	    bss	    dec	    hex	filename
+  32576	    504	   3456	  36536	   8eb8	gps_neo6m.elf
+Finished building: default.size.stdout
+ 
+
+19:23:44 Build Finished. 0 errors, 0 warnings. (took 206ms)
+
