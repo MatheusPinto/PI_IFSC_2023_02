@@ -1,4 +1,4 @@
-# Código controlador
+# Código do controlador
 
 Os códigos disponíveis nesse diretório são referentes ao controlador do Wall-e no modo autônomo.
 

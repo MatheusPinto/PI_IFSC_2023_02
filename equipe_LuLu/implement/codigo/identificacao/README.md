@@ -1,4 +1,4 @@
-# Código do algorítimo de segmentação
+# Código do algorítimo de identificação de lixo
 
 Os códigos disponíveis nesse diretório são referentes ao identificador de lixo. O modelo do identificdor foi treinado como descrito na [página do treinamento](../identificador).
 

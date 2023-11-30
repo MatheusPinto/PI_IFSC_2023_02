@@ -17,6 +17,6 @@ Também há alguns scripts de teste usados durante a etapa de validação do fun
 É possível rodar os códigos no próprio computador para fins de teste. Para isso, é necessário ter o Python 3. No caso de estar em uma Raspberry Pi, deve-se possuir o módulo 'RPi.GPIO'. Como esse módulo foi instalado na Raspberry Pi está descrito na página de [configuração da Raspberry Pi](../raspberry).
 
 
-No caso de estar executando os scripts desse módulo fora da Raspberry Pi (apenas para simulação), há uma versão de simulação do módulo disponível no diretório [fake-RPi](fake-RPi).
+No caso de estar executando os scripts desse módulo fora da Raspberry Pi (apenas para simulação), há uma versão de simulação do módulo disponível no diretório [fake_RPi](fake_RPi).
 
 OBS.: Ao enviar esse código para a Raspberry Pi, o diretório [fake_RPi](fake_RPi) não pode estar incluído. Por isso, o Rsync foi configurado para ignorá-lo.
