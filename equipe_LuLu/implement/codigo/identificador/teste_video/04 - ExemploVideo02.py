@@ -1,5 +1,4 @@
 import cv2
-
     
 """ Faz um teste de streaming de video do modelo treinado.
 
@@ -10,7 +9,7 @@ import cv2
 """
 Camera = cv2.VideoCapture(0)
 
-# 
+# Determina classificador como o arquivo treinado.
 classificador = cv2.CascadeClassifier('cascade.xml')
 
 while True:
