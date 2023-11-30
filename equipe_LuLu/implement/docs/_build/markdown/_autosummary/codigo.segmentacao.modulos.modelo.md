@@ -57,7 +57,7 @@ Esse bloco será colocado entre as operações de downsample e upsample.
 
 <a id="codigo.segmentacao.modulos.modelo._bloco_upsample"></a>
 
-### codigo.segmentacao.modulos.modelo.\_bloco_upsample(x, n_filtros, saida_codificador)
+### codigo.segmentacao.modulos.modelo.\_bloco_upsample(x: Tensor, n_filtros: [int](https://docs.python.org/3/library/functions.html#int), saida_codificador: Tensor)
 
 Bloco que aumenta as dimensões (n_linhas, n_colunas) dos dados, para formar a máscara.
 
