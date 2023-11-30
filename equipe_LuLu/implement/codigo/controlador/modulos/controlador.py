@@ -260,13 +260,13 @@ class Controlador():
 
         # Aplica os PID à velocidade linear e angular
         if self._PID_linear != None:
-            self._PID_linear.setpoint = linear
+            self._PID_linear.setpoint = linear  # Velocidade linear desejada
 
             self._vel_linear = self._PID_linear(self._vel_linear)
             linear = int(self._vel_linear)
 
         if self._PID_angular != None:
-            self._PID_angular.setpoint = angular
+            self._PID_angular.setpoint = angular  # Velocidade angular desejada
 
             self._vel_angular = self._PID_angular(self._vel_angular)
             angular = int(self._vel_angular)

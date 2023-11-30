@@ -107,7 +107,7 @@ def _codificador(x : tf.Tensor, n_filtros : int, n_downsample : int):
 
     return x, saidas_codificador
 
-def _bloco_upsample(x, n_filtros, saida_codificador):
+def _bloco_upsample(x : tf.Tensor, n_filtros : int, saida_codificador : tf.Tensor):
     """Bloco que aumenta as dimensões (n_linhas, n_colunas) dos dados, para formar a máscara.
 
     Cria a camada a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
