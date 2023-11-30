@@ -78,14 +78,7 @@ Fonte: Autoria Própria
 Fonte: Autoria Própria
 
 
-Após as validações feitas em bancada com a protoboard, partimos para o primeiro protótipo de PCI feito e começamos os testes. 
+Após as validações feitas em bancada com a protoboard, partimos para o primeiro protótipo de PCI feito.
 
-## Teste Wall-e em Bancada
-
-Último teste feito, antes da fabricação da placa final, no video é possivel observar o controle dos motores feitos pela raspberry e consumo total do circuito eletrônico, feitos com o primeiro protótipo.
-
-[Teste em Vídeo Wall-E](https://youtu.be/4ZGaPNGg280)
-
-Fonte: Autoria Própria
 
 
