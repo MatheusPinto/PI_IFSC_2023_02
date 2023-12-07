@@ -4,7 +4,10 @@
 
 # codigo.segmentacao.datasets
 
-### Modules
+* **folder:**
+  [datasets/](../../../../codigo/segmentacao/datasets)
+
+### Modulos
 
 | [`codigo.segmentacao.datasets.cria_dataset`](codigo.segmentacao.datasets.cria_dataset.md#module-codigo.segmentacao.datasets.cria_dataset)    | Cria o dataset de treino para segmentação.   |
 |----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|

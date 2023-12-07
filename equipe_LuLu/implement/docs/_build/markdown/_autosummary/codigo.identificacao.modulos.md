@@ -4,7 +4,10 @@
 
 # codigo.identificacao.modulos
 
-### Modules
+* **folder:**
+  [modulos/](../../../../codigo/identificacao/modulos)
+
+### Modulos
 
 | [`codigo.identificacao.modulos.identificador`](codigo.identificacao.modulos.identificador.md#module-codigo.identificacao.modulos.identificador)   | Identificador de lixo.   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|

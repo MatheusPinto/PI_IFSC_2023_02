@@ -4,7 +4,10 @@
 
 # codigo.interface.modulos
 
-### Modules
+* **folder:**
+  [modulos/](../../../../codigo/interface/modulos)
+
+### Modulos
 
 | [`codigo.interface.modulos.TLSstream`](codigo.interface.modulos.TLSstream.md#module-codigo.interface.modulos.TLSstream)   | Módulo para gerenciar streams de dados via TCP com suporte a TLS.   |
 |---------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|

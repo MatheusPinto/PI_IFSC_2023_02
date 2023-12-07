@@ -1,8 +1,11 @@
-<a id="module-codigo.movimento.fake_RPi.RPi.GPIO"></a>
-
 <a id="codigo-movimento-fake-rpi-rpi-gpio"></a>
 
 # codigo.movimento.fake_RPi.RPi.GPIO
+
+* **code:**
+  [GPIO.py](../../../../codigo/movimento/fake_RPi/RPi/GPIO.py)
+
+<a id="module-codigo.movimento.fake_RPi.RPi.GPIO"></a>
 
 Módulo de simulação para o módulo RPi.GPIO.
 

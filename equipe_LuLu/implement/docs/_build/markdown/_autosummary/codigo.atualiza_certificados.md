@@ -1,8 +1,11 @@
-<a id="module-codigo.atualiza_certificados"></a>
-
 <a id="codigo-atualiza-certificados"></a>
 
 # codigo.atualiza_certificados
+
+* **code:**
+  [atualiza_certificados.py](../../../../codigo/atualiza_certificados.py)
+
+<a id="module-codigo.atualiza_certificados"></a>
 
 Cria os certificados e chaves privadas usadas na comunicação do Wall-e com o usuário.
 

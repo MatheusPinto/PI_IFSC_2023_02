@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.modulos.treina"></a>
-
 <a id="codigo-segmentacao-modulos-treina"></a>
 
 # codigo.segmentacao.modulos.treina
+
+* **code:**
+  [treina.py](../../../../codigo/segmentacao/modulos/treina.py)
+
+<a id="module-codigo.segmentacao.modulos.treina"></a>
 
 Funções de treinamento do modelo de segmentação.
 
@@ -14,7 +17,7 @@ A função responsável por treinar os modelos é a função [`treina_modelo()`]
 
 Base: `Callback`
 
-Callback usada no treinamento para finalizá-lo se a acurácia de validação for baixa.
+Callback usada no treinamento para restaurá-lo se a acurácia de validação for baixa.
 
 No final de cada época, checa se a acurácia de validação é muito baixa. Se for, restaura o
 modelo para melhor versão e continua o treinamento.
@@ -37,7 +40,7 @@ Implementa a execução no final de cada época.
 
 <a id="codigo.segmentacao.modulos.treina.treina_modelo"></a>
 
-### codigo.segmentacao.modulos.treina.treina_modelo(modelo, path: [str](https://docs.python.org/3/library/stdtypes.html#str) = 'modelo-segmentacao', backbone=False, acuracia_minima=None)
+### codigo.segmentacao.modulos.treina.treina_modelo(modelo: Model, path: [str](https://docs.python.org/3/library/stdtypes.html#str) = 'modelo-segmentacao', backbone: [bool](https://docs.python.org/3/library/functions.html#bool) = False, acuracia_minima: [float](https://docs.python.org/3/library/functions.html#float) | [None](https://docs.python.org/3/library/constants.html#None) = None)
 
 Treina um modelo do Tensorflow.
 
@@ -63,7 +66,7 @@ A modelo com melhor acurácia é salvo no diretório definido por <path>maior-ac
 ‘modelo-segmentacao/maior-acuracia/’
 
 * **Parâmetros:**
-  * **modelo** (*tf.keras.Model*) – O modelo do Tensorflow.
+  * **modelo** (*tf.keras.Model*) – O modelo do Tensorflow que será treinado.
   * **path** ([*str*](https://docs.python.org/3/library/stdtypes.html#str)*,* *default="modelo-segmentacao"*) – O path da pasta em que os dados relacionados ao modelo serão salvos.
   * **acuracia_minima** ([*float*](https://docs.python.org/3/library/functions.html#float)*,* *default=None*) – A acurácia mínima aceitável para o treinamento. Se for menor do que isso, restaura os parâmetros do modelo.
 

@@ -4,7 +4,10 @@
 
 # codigo
 
-### Modules
+* **folder:**
+  [codigo/](../../../../codigo)
+
+### Modulos
 
 | [`codigo.atualiza_certificados`](codigo.atualiza_certificados.md#module-codigo.atualiza_certificados)   | Cria os certificados e chaves privadas usadas na comunicação do Wall-e com o usuário.   |
 |---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|

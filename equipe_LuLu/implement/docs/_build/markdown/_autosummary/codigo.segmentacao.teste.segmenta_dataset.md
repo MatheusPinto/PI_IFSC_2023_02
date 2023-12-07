@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.teste.segmenta_dataset"></a>
-
 <a id="codigo-segmentacao-teste-segmenta-dataset"></a>
 
 # codigo.segmentacao.teste.segmenta_dataset
+
+* **code:**
+  [segmenta_dataset.py](../../../../codigo/segmentacao/teste/segmenta_dataset.py)
+
+<a id="module-codigo.segmentacao.teste.segmenta_dataset"></a>
 
 Testa a segmentação de imagens do dataset.
 

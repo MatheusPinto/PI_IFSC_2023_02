@@ -1,8 +1,11 @@
-<a id="module-codigo.movimento.teste.testa_motores"></a>
-
 <a id="codigo-movimento-teste-testa-motores"></a>
 
 # codigo.movimento.teste.testa_motores
+
+* **code:**
+  [testa_motores.py](../../../../codigo/movimento/teste/testa_motores.py)
+
+<a id="module-codigo.movimento.teste.testa_motores"></a>
 
 Testa os motores DC.
 

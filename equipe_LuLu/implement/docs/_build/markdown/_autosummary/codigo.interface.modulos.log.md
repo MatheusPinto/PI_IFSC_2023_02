@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.modulos.log"></a>
-
 <a id="codigo-interface-modulos-log"></a>
 
 # codigo.interface.modulos.log
+
+* **code:**
+  [log.py](../../../../codigo/interface/modulos/log.py)
+
+<a id="module-codigo.interface.modulos.log"></a>
 
 Módulo dedicado ao registro de log.
 

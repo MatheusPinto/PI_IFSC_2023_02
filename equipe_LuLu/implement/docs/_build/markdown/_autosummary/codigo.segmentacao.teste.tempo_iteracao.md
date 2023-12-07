@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.teste.tempo_iteracao"></a>
-
 <a id="codigo-segmentacao-teste-tempo-iteracao"></a>
 
 # codigo.segmentacao.teste.tempo_iteracao
+
+* **code:**
+  [tempo_iteracao.py](../../../../codigo/segmentacao/teste/tempo_iteracao.py)
+
+<a id="module-codigo.segmentacao.teste.tempo_iteracao"></a>
 
 Carrega um modelo do Tensorflow Lite e faz algumas iterações com ele.
 

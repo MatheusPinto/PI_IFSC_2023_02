@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.treina_modelo"></a>
-
 <a id="codigo-segmentacao-treina-modelo"></a>
 
 # codigo.segmentacao.treina_modelo
+
+* **code:**
+  [treina_modelo.py](../../../../codigo/segmentacao/treina_modelo.py)
+
+<a id="module-codigo.segmentacao.treina_modelo"></a>
 
 Continua o treinamento do modelo.
 

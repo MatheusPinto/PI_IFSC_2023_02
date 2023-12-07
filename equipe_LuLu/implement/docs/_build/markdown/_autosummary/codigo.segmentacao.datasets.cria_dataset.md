@@ -1,22 +1,25 @@
-<a id="module-codigo.segmentacao.datasets.cria_dataset"></a>
-
 <a id="codigo-segmentacao-datasets-cria-dataset"></a>
 
 # codigo.segmentacao.datasets.cria_dataset
 
+* **code:**
+  [cria_dataset.py](../../../../codigo/segmentacao/datasets/cria_dataset.py)
+
+<a id="module-codigo.segmentacao.datasets.cria_dataset"></a>
+
 Cria o dataset de treino para segmentação.
 
-Utiliza imagens e suas respectivas máscaras criadas com o Blender para gerar um dataset que será usado
-para treinar o algorítimo de segmentação de imagens. Elas são carregadas em datasets separados (um para
-imagens e outro para as máscaras) e unidas depois. Cada elemento do novo dataset será um conjunto com a
-imagem original e sua respectiva máscara, nessa ordem.
+Utiliza imagens e suas respectivas máscaras na pasta definda pelo parâmetro ‘DATASETS_PATH’ para gerar
+um dataset do tensorflow que será usado para treinar o algorítimo de segmentação de imagens. Elas são
+carregadas em datasets separados (um para imagens e outro para as máscaras) e unidas depois. Cada
+elemento do novo dataset será um conjunto com a imagem original e sua respectiva máscara, nessa ordem.
 
 Para criar um dataset, é necessário preparar as imagens originais e a máscara em uma pasta. Por exemplo,
 “data/”. As imagens originais devem estar dentro da pasta “data/original” e as máscaras, dentro de
 “pasta/mascara”. Os nomes das imagens devem ser iguais aos das suas respectivas máscaras. Por exemplo, a
 imagem “pasta/original/1.png” tem uma máscara dada por “pasta/mascara/1.png”. Para formar um dataset com
-essas imagens, basta adicionar a pasta “pasta/” ao diretório “imagens-dataset/”. É possível haver mais de
-uma pasta com imagens e suas máscaras.
+essas imagens, basta adicionar a pasta “pasta/” ao diretório dado pelo parâmetro ‘DATASETS_PATH’. É possível
+haver mais de uma pasta com imagens e suas máscaras entro desse diretório.
 
 Outro parâmetro importante é o formato das imagens, definido por ‘FORMATO_IMAGENS’. O tamanho das imagens
 é uma tupla do tipo (n_linhas, n_colunas), em pixels. Ele será usado no melhoramento do dataset.

@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.teste.video_interface_server"></a>
-
 <a id="codigo-interface-teste-video-interface-server"></a>
 
 # codigo.interface.teste.video_interface_server
+
+* **code:**
+  [video_interface_server.py](../../../../codigo/interface/teste/video_interface_server.py)
+
+<a id="module-codigo.interface.teste.video_interface_server"></a>
 
 Script de teste da interface - servidor.
 

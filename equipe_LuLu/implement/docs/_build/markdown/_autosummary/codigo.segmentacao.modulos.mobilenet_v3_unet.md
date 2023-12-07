@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.modulos.mobilenet_v3_unet"></a>
-
 <a id="codigo-segmentacao-modulos-mobilenet-v3-unet"></a>
 
 # codigo.segmentacao.modulos.mobilenet_v3_unet
+
+* **code:**
+  [mobilenet_v3_unet.py](../../../../codigo/segmentacao/modulos/mobilenet_v3_unet.py)
+
+<a id="module-codigo.segmentacao.modulos.mobilenet_v3_unet"></a>
 
 Modelo usado para segmentação de imagens.
 

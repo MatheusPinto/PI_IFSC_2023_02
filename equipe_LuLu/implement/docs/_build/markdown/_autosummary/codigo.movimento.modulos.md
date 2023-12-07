@@ -4,7 +4,10 @@
 
 # codigo.movimento.modulos
 
-### Modules
+* **folder:**
+  [modulos/](../../../../codigo/movimento/modulos)
+
+### Modulos
 
 | [`codigo.movimento.modulos.motores`](codigo.movimento.modulos.motores.md#module-codigo.movimento.modulos.motores)                | Módulo de controle dos motores.   |
 |----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|

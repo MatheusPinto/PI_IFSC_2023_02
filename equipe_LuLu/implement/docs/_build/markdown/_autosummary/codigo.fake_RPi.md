@@ -1,8 +1,11 @@
-<a id="module-codigo.fake_RPi"></a>
-
 <a id="codigo-fake-rpi"></a>
 
 # codigo.fake_RPi
+
+* **code:**
+  [fake_RPi.py](../../../../codigo/fake_RPi.py)
+
+<a id="module-codigo.fake_RPi"></a>
 
 Adiciona o path da versão de simulação do módulo RPi.GPIO.
 

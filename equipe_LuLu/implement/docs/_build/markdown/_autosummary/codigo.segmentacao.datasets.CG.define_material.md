@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.datasets.CG.define_material"></a>
-
 <a id="codigo-segmentacao-datasets-cg-define-material"></a>
 
 # codigo.segmentacao.datasets.CG.define_material
+
+* **code:**
+  [define_material.py](../../../../codigo/segmentacao/datasets/CG/define_material.py)
+
+<a id="module-codigo.segmentacao.datasets.CG.define_material"></a>
 
 Altera os materiais dos objetos entre os materiais originais e as máscaras.
 
