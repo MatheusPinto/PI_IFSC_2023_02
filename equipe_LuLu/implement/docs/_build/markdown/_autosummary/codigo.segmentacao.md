@@ -4,7 +4,10 @@
 
 # codigo.segmentacao
 
-### Modules
+* **folder:**
+  [segmentacao/](../../../../codigo/segmentacao)
+
+### Modulos
 
 | [`codigo.segmentacao.converte_tflite`](codigo.segmentacao.converte_tflite.md#module-codigo.segmentacao.converte_tflite)   | Converte o modelo para o formato do tensorflow lite.   |
 |---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|

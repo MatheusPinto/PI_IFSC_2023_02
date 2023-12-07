@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.teste.stream_server_sem_cripto"></a>
-
 <a id="codigo-interface-teste-stream-server-sem-cripto"></a>
 
 # codigo.interface.teste.stream_server_sem_cripto
+
+* **code:**
+  [stream_server_sem_cripto.py](../../../../codigo/interface/teste/stream_server_sem_cripto.py)
+
+<a id="module-codigo.interface.teste.stream_server_sem_cripto"></a>
 
 Teste do stream de dados - servidor (sem criptografia).
 

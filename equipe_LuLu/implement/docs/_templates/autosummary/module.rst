@@ -1,5 +1,12 @@
 {{ fullname | escape | underline}}
 
+
+{# Documentação de um arquivo #}
+
+{% if not modules %}
+:code: [{{ name }}.py](../../../../{{ fullname | replace('.','/') }}.py)
+{% endif %}
+
 .. automodule:: {{ fullname }}
    :members:
    :private-members:
@@ -7,9 +14,14 @@
    :show-inheritance:
 
 
+{# Documentação de uma pasta #}
+
 {% block modules %}
 {% if modules %}
-.. rubric:: Modules
+
+:folder: [{{ name }}/](../../../../{{ fullname | replace('.','/') }})
+
+.. rubric:: Modulos
 
 .. autosummary::
    :toctree:

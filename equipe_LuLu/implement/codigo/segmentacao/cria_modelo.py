@@ -7,8 +7,8 @@ O modelo do backbone será salvo no diretório 'modelo-segmentacao/', e plotado 
 em 'plots/modelo-final.png'.
 
 Assim que o modelo é criado, ele já é treinado. Para saber como funciona o
-treinamento, veja a função :func:`~modulos.treina.treina_modelo` do
-módulo :mod:`modulos.treina`.
+treinamento, veja a função :func:`~codigo.segmentacao.modulos.treina.treina_modelo` do
+módulo :mod:`~codigo.segmentacao.modulos.treina`.
 """
 
 
@@ -19,7 +19,7 @@ import tensorflow as tf
 
 if __name__ == "__main__":
     # Cria o modelo
-    m = modelo.modelo_unet( (128, 128, 3), 3, 7)
+    m = modelo.modelo_unet((128, 128, 3), 3, 7)
 
     # Gera o sumário e gráfico do modelo
     m.summary(expand_nested=True)

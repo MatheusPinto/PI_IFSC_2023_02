@@ -84,3 +84,65 @@ Módulo que implementa o Controlador do Wall-e no modo autônomo.
 
 | [`codigo.controlador.teste`](_autosummary/codigo.controlador.teste.md#module-codigo.controlador.teste)   |    |
 |----------------------------------------------------------------------------------------------------------|----|
+
+<a id="identificacao-de-lixo"></a>
+
+## Identificação de lixo
+
+Módulo responsável por implementar a identificação de lixo.
+
+<a id="id4"></a>
+
+### Submódulos:
+
+| [`codigo.identificacao.modulos`](_autosummary/codigo.identificacao.modulos.md#module-codigo.identificacao.modulos)   |    |
+|----------------------------------------------------------------------------------------------------------------------|----|
+
+<a id="id5"></a>
+
+### Scrpipts de teste:
+
+| [`codigo.identificacao.teste`](_autosummary/codigo.identificacao.teste.md#module-codigo.identificacao.teste)   |    |
+|----------------------------------------------------------------------------------------------------------------|----|
+
+<a id="movimento"></a>
+
+## Movimento
+
+Modulo que implementa a movimentação do Wall-e. Usado tanto no modo teleoperado quanto no autônomo.
+
+<a id="id6"></a>
+
+### Submódulos:
+
+| [`codigo.movimento.modulos`](_autosummary/codigo.movimento.modulos.md#module-codigo.movimento.modulos)                |    |
+|-----------------------------------------------------------------------------------------------------------------------|----|
+| [`codigo.movimento.fake_RPi.RPi`](_autosummary/codigo.movimento.fake_RPi.RPi.md#module-codigo.movimento.fake_RPi.RPi) |    |
+
+<a id="id7"></a>
+
+### Scrpipts de teste:
+
+| [`codigo.movimento.teste`](_autosummary/codigo.movimento.teste.md#module-codigo.movimento.teste)   |    |
+|----------------------------------------------------------------------------------------------------|----|
+
+<a id="scrpipts-de-teste-da-etapa-de-validacao"></a>
+
+### Scrpipts de teste da etapa de validação:
+
+| [`codigo.movimento.teste_validacao`](_autosummary/codigo.movimento.teste_validacao.md#module-codigo.movimento.teste_validacao)   |    |
+|----------------------------------------------------------------------------------------------------------------------------------|----|
+
+<a id="codigo-principal"></a>
+
+## Código principal
+
+O código principal está disponível nos arquivos da interface de usuário e do Wall-e.
+
+| [`codigo`](_autosummary/codigo.md#module-codigo)   |    |
+|----------------------------------------------------|----|
+
+Além disso, há alguns scripts de teste para os código como um todo.
+
+| [`codigo.teste`](_autosummary/codigo.teste.md#module-codigo.teste)   |    |
+|----------------------------------------------------------------------|----|

@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.teste.segmenta_video"></a>
-
 <a id="codigo-segmentacao-teste-segmenta-video"></a>
 
 # codigo.segmentacao.teste.segmenta_video
+
+* **code:**
+  [segmenta_video.py](../../../../codigo/segmentacao/teste/segmenta_video.py)
+
+<a id="module-codigo.segmentacao.teste.segmenta_video"></a>
 
 Testa a segmentação de um vídeo.
 

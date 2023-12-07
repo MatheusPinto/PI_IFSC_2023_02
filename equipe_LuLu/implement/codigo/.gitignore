@@ -1,0 +1,13 @@
+# Arquivos de backup do vim
+*~
+.*~
+
+# Variáveis locais
+env/
+
+# Códigos em python
+__pycache__
+
+# Arquivos de log
+log/
+*.log

@@ -22,7 +22,7 @@ import modulos.treina as treina
 
 # Parâmetros do script
 MODELO_PATH = "modelo-segmentacao/"
-ACURACIA_MINIMA = 0.5
+ACURACIA_MINIMA = 0.8
 
 
 if __name__ == "__main__":

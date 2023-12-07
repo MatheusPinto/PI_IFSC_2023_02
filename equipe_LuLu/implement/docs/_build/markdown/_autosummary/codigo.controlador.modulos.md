@@ -4,7 +4,10 @@
 
 # codigo.controlador.modulos
 
-### Modules
+* **folder:**
+  [modulos/](../../../../codigo/controlador/modulos)
+
+### Modulos
 
 | [`codigo.controlador.modulos.aestrela`](codigo.controlador.modulos.aestrela.md#module-codigo.controlador.modulos.aestrela)          | Implementação do algorítimo de busca A-estrela.   |
 |-------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|

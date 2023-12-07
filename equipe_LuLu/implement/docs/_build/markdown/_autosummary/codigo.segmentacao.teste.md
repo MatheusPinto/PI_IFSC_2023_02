@@ -4,7 +4,10 @@
 
 # codigo.segmentacao.teste
 
-### Modules
+* **folder:**
+  [teste/](../../../../codigo/segmentacao/teste)
+
+### Modulos
 
 | [`codigo.segmentacao.teste.mostra_sumario_e_plot`](codigo.segmentacao.teste.mostra_sumario_e_plot.md#module-codigo.segmentacao.teste.mostra_sumario_e_plot)    | Mostra o sumário e plot do modelo.                                    |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|

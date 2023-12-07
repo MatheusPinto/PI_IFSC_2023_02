@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.teste.stream_server"></a>
-
 <a id="codigo-interface-teste-stream-server"></a>
 
 # codigo.interface.teste.stream_server
+
+* **code:**
+  [stream_server.py](../../../../codigo/interface/teste/stream_server.py)
+
+<a id="module-codigo.interface.teste.stream_server"></a>
 
 Teste do stream de dados - servidor.
 

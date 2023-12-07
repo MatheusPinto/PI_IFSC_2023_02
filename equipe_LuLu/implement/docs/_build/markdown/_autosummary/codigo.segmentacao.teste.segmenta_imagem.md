@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.teste.segmenta_imagem"></a>
-
 <a id="codigo-segmentacao-teste-segmenta-imagem"></a>
 
 # codigo.segmentacao.teste.segmenta_imagem
+
+* **code:**
+  [segmenta_imagem.py](../../../../codigo/segmentacao/teste/segmenta_imagem.py)
+
+<a id="module-codigo.segmentacao.teste.segmenta_imagem"></a>
 
 Testa a segmentação de imagens.
 

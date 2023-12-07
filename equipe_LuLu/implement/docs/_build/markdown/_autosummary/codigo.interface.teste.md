@@ -4,7 +4,10 @@
 
 # codigo.interface.teste
 
-### Modules
+* **folder:**
+  [teste/](../../../../codigo/interface/teste)
+
+### Modulos
 
 | [`codigo.interface.teste.stream_client`](codigo.interface.teste.stream_client.md#module-codigo.interface.teste.stream_client)                                  | Teste do stream de dados - cliente.                     |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|

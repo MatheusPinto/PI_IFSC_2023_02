@@ -17,11 +17,11 @@ class AEstrela():
     """Implementa o algorítimo A*, para obter o melhor caminho entre dois pontos de um mapa.
 
     Essa classe permite configurar um objeto que traça o menor caminho entre dois pontos
-    em um mapa usando o algoŕitmo A*. Para gerar o caminho, deve ser fornecido um mapa de
+    em um mapa usando o algoítimo A*. Para gerar o caminho, deve ser fornecido um mapa de
     entrada e as posições iniciais e finais do caminho. 
 
     Os mapas usados nessa implementação são todos matrizes do Numpy do tipo matriz[y][x].
-    O eixo y é apresentado primeiro para melhor compatibilidade com o OpenCV. Os pontos
+    O eixo y é apresentado primeiro para melhor compatibilidade com o Numpy. Os pontos
     também usam o formato (y, x). A matriz do mapa que indica as posições permitidas para
     se mover e as que não são permitidas (paredes) utiliza valores do tipo uint8. É possível
     criar uma matriz desse tipo com o seguinte código:
@@ -51,6 +51,25 @@ class AEstrela():
     Para fins de debug e verificação do funcionamento, é possível retornar um mapa com todas as
     posições checadas ao gerar um caminho. Veja o método :meth:`retorna_mapa_checados()` para mais
     informações.
+
+    É possível aplicar uma função de smoothing ao caminho gerado. Ela é baseada na média dos pontos
+    próximos. Veja o método :meth:`gera_caminho_smoothing()` para mais informações.
+
+    Também é possível retornar um mapa com o caminho traçado. Veja o método :meth:`gera_caminho_mapa()`,
+    e sua versão com smoothing :meth:`gera_caminho_mapa_smoothing()`.
+
+    Se deseja saber a direção inicial que deve ser seguida para alcançar o ponto de destino, use o método
+    :meth:`retorna_direcao_inicial()`.
+
+    Warnings
+    --------
+    Esse algorítimo foi pensado para ser usado máscaras de algorítimos de segmentação semântica. Então
+    foi desenvolvido para operar com paredes espessas: com pelo menos dois blocos de espessura. Usar
+    esse algorítimo com mapas que possuem apenas um bloco de espessura pode resultar em comportamento
+    inesperado, mas ele funciona adequadamente com mapas gerados por segmentação semântica.
+
+    Se deseja ajustar esse algorítimo para funcionar com mapas com paredes e 1 bloco de espessura,
+    ajuste o método :meth:`_obtem_caminho()`.
     """
 
     def __init__(self, passo=10):
@@ -70,8 +89,8 @@ class AEstrela():
     def define_mapas(self, mapa, mapa_custo=None):
         """Define o mapa do ambiente onde será traçado o caminho.
 
-        Deve ser forncido um mapa do ambiente onde será traçado o caminho. O mapa é uma matriz do Numpy tipo
-        matriz[y][x] de inteiros onde 0 representa um lugar por onde pode ser traçado um caminho e 1, uma
+        Deve ser fornecido um mapa do ambiente onde será traçado o caminho. O mapa é uma matriz do Numpy tipo
+        matriz[y][x] de uint8 onde 0 representa um lugar por onde pode ser traçado um caminho e 1, uma
         barreira sólida que não pode ser ultrapassada.
 
         Também é possível fornecer um mapa de custo cujos valores serão somados a função heurística.
@@ -110,9 +129,11 @@ class AEstrela():
     def gera_caminho(self, pos_inicio, pos_fim):
         """Gera o melhor caminho do ponto inicial até o final no mapa.
 
-        Retorna um vetor com esse caminho. Da posição inicial até a posição anterior ao ponto final.
+        Retorna uma lista com esse caminho. Da posição inicial até a posição anterior ao ponto final.
+        Ela é gerada com os métodos e :meth:`_obtem_caminho()` e :meth:`_gera_vetor_caminho()`.
 
-        As posições devem ser uma tupla do tipo (pos_y, pos_x)
+        As posições de início e de fim devem ser uma tupla do tipo (pos_y, pos_x). Os pontos da lista
+        retornada também são desse formato.
 
         Parameters
         ----------
@@ -125,7 +146,7 @@ class AEstrela():
         Returns
         -------
         list
-            Vetor com os pontos do caminho.
+            Lista com os pontos do caminho.
         """
         # Se o caminho já foi traçado, não é necessário traçá-lo novamente
         if self._pos_inicio == pos_inicio and self._pos_fim == pos_fim:
@@ -163,12 +184,13 @@ class AEstrela():
         """Gera o melhor caminho do ponto inicial até o final no mapa, com smoothing.
 
         Funciona da mesma forma que o método :meth:`gera_caminho()`, mas o caminho será ajustado
-        com uma técnica de suavização (smoothing).
+        com uma técnica de suavização (smoothing). A técnica de suavização é dada executada pelo
+        método :meth:`_vetor_smoothing()`.
 
         Parameters
         ----------
         pos_inicial : tuple
-            Posição de inicio no mapa.
+            Posição de início no mapa.
 
         pos_fim : tuple
             Posição de destino do caminho no mapa.
@@ -176,7 +198,7 @@ class AEstrela():
         Returns
         -------
         list
-            Vetor com os pontos do caminho.
+            Lista com os pontos do caminho.
         """
         vetor_caminho = self.gera_caminho(pos_inicio, pos_fim)
         vetor_caminho = self._vetor_smoothing(vetor_caminho, 25)
@@ -188,7 +210,11 @@ class AEstrela():
 
         Retorna um ângulo em radiano ou em graus, dependendo do parâmetro *rad*. Ele corresponde ao ângulo,
         usando as convenções matemáticas padrões, da abertura entre o eixo x da região inferior do mapa e direção
-        do caminho percorrido.
+        do caminho percorrido, como ilustrado na imagem abaixo.
+
+        .. image:: /../../../../codigo/controlador/img/direcao-inicial-do-aestrela.svg
+
+        Fonte: autoria própria
 
         Parameters
         ----------
@@ -238,8 +264,9 @@ class AEstrela():
     def gera_caminho_mapa(self, pos_inicio, pos_fim):
         """Gera um mapa do caminho percorrido com o algorítimo A*.
 
-        Retorna um mapa com esse caminho. Esse mapa é um array Numpy do tipo matriz[y][x] de inteiros onde 1
-        representa uma posição do caminho traçado, e 0 uma posição fora do caminho.
+        O caminho gerado pelo método :meth:`gera_caminho()` é usado para gerar um mapa. Esse mapa
+        é um array Numpy do tipo matriz[y][x] de inteiros onde 1 representa uma posição do caminho
+        traçado, e 0 uma posição fora do caminho.
 
         As posições devem ser uma tupla do tipo (pos_y, pos_x).
 
@@ -269,7 +296,7 @@ class AEstrela():
         Parameters
         ----------
         pos_inicio : tuple
-            Posição de inicio no mapa.
+            Posição de início no mapa.
 
         pos_fim : tuple
             Posição de destino do caminho no mapa.
@@ -299,7 +326,7 @@ class AEstrela():
         return self._mapa_checado
 
     def _obtem_caminho(self, pos_atual):
-        """Obtém o menor caminho entre os pontos.
+        """Define o menor caminho entre os pontos.
 
         Retorna um tupla do tipo (posicao_atual, posicao_pai, custo). A 'posicao_atual' é
         uma tupla contendo a posição (y, x) do último ponto andes de conectar com o ponto
@@ -365,7 +392,7 @@ class AEstrela():
         Ao gerar o caminho, as posições checadas são colocadas no vetor de checados 'vetor_fechado'.
         Assim, é possível acessar a 'posição_pai' por meio desse vetor. Como os elementos desse vetor
         possuem a estrutura (posicao_inicial, posicao_pai, custo), mesma usada no método
-        :meth:`_obtem_caminho`, é possível, recursivamente, acessar todos os pontos do caminho
+        :meth:`_obtem_caminho()`, é possível, recursivamente, acessar todos os pontos do caminho
         saltando entre os elementos do 'vetor_fechado'.
 
         Parameters
@@ -412,7 +439,7 @@ class AEstrela():
             Vetor com os pontos.
 
         indice : int
-            Indice do ponto no *vetor*.
+            Índice do ponto no *vetor*.
 
         n_pontos : int
             Quantidade de pontos adjacentes usados na suavização.
@@ -493,8 +520,8 @@ class AEstrela():
 
         Note
         ----
-        Esse método não está sendo utilizado atualmente pela classe. Foi deixado para caso deseje substituir
-        o algoritmo de suavização por esse.
+        Esse método não está sendo utilizado atualmente pela classe. Foi deixado para caso o usuário
+        deseje substituir o algoritmo de suavização por esse.
         """
         # Se não conseguiu traçar um caminho, retorna None
         if vetor == None:
@@ -540,6 +567,7 @@ class AEstrela():
         # Mapa inicial (vazio)
         mapa = np.zeros(self._mapa_formato, dtype=np.uint8)
 
+        # Coloca o valor 1 em cada posição do caminho.
         for pos in vetor_caminho:
             mapa[pos] = 1
 
@@ -548,7 +576,7 @@ class AEstrela():
     def _gera_mapa_caminho_smoothing(self, vetor_caminho):
         """Retorna um mapa com o menor caminho traçado. Usa o algorítimo de suavização.
 
-        Funciona de forma semelhante ao método :meth:`_gera_mapa_caminho`, mas com o algorítimo de suavização.
+        Funciona de forma semelhante ao método :meth:`_gera_mapa_caminho()`, mas com o algorítimo de suavização.
 
         Parameters
         ----------
@@ -558,7 +586,7 @@ class AEstrela():
         Returns
         -------
         numpy.ndarray
-            Mapa com o caminho percorrido suavizado.
+            Mapa com o caminho percorrido (suavizado).
         """
         # Se não conseguiu traçar um caminho, retorna None
         if vetor_caminho == None:
@@ -567,6 +595,7 @@ class AEstrela():
         # Mapa inicial (vazio)
         mapa = np.zeros(self._mapa_formato, dtype=np.uint8)
 
+        # Será traçado uma linha entre os pontos do vetor suavizado
         for n in range(len(vetor_caminho)-1):
             cv.line(mapa, vetor_caminho[n][::-1], vetor_caminho[n+1][::-1], (1, 1, 1), 1)
 
@@ -575,9 +604,9 @@ class AEstrela():
     def _checa_pos_valida(self, pos):
         """Checa se uma posição é valida para entrar na lista aberta.
 
-        A posíção deve ser uma tupla do tipo (y, x).
+        A posição deve ser uma tupla do tipo (y, x).
 
-        Fatores levados em conta ao checar a validade:
+        Fatores considerados ao checar a validade:
 
         * se a posição é uma parede (ou já esteve na lista aberta)
         * se a posição pertence ao mapa (não está extrapolando os limites)
@@ -590,7 +619,7 @@ class AEstrela():
         Returns
         -------
         bool
-            Se a posição é valida para entrar na lista aberta.
+            Se a posição é valida para entrar na lista aberta (não é colidível).
         """
         # Se está fora da região do mapa, é considerada inválida
         if (pos[0] >= self._mapa_formato[0] or pos[0] < 0) or (pos[1] >= self._mapa_formato[1] or pos[1] < 0):
@@ -605,11 +634,20 @@ class AEstrela():
     def _computa_custo(self, posicao_atual, custo_anterior, passo_diagonal=False):
         """Computa o custo associado a uma posição do mapa.
 
-        Acumula o custo da posição anterior (pai), mais o custo de um passo (configurado ao
-        instanciar o objeto), mais o custo da função heurística e o custo definido pela
-        matriz de custo extra (se houver uma).
+        O custo associado a uma posição é dado pelos seguintes fatores:
 
-        Se o passo (mudança de posição) ocorre na diagonal, o custo do passo é 0.414 vezes maior.
+        - Custo da posição anterior (pai)
+        - Custo do passo (mudança de posição)
+        - Custo da função heurística
+        - Custo da matriz de custo extra
+
+        O custo associado ao passo é definido ao instanciar o objeto. Veja o método
+        :meth:`__init__()` para mais detalhes.
+
+        A matriz de custo extra é definida pelo método :meth:`define_mapas()`.
+
+        Se o passo (mudança de posição) ocorre na diagonal, o custo do passo é 0.414 vezes maior
+        (a diagonal de um quadrado é 1.414 vezes o seu lado).
 
         Parameters
         ----------
@@ -629,7 +667,7 @@ class AEstrela():
         """
         custo = custo_anterior + self._funcao_heuristica(posicao_atual) + self._passo
 
-        # Se esttá na diagonal, o passo é 0.414 vezes maior
+        # Se está na diagonal, o passo é 0.414 vezes maior
         if passo_diagonal:
             custo += self._passo*0.414
 
@@ -642,12 +680,13 @@ class AEstrela():
     def _funcao_heuristica(self, pos_atual):
         """Função heurística do modelo.
 
-        Consiste na distância entre os dois pontos (atual e final).
+        A função heurística aplicada nesse algorítimo consiste na distância entre os
+        dois pontos (atual e final).
 
         Parameters
         ----------
         pos_atual : tuple
-            Posição ponto atual.
+            Posição do ponto cujo custo da função heurística será computado.
 
         Returns
         -------

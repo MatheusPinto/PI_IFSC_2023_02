@@ -1,8 +1,11 @@
-<a id="module-codigo.controlador.modulos.aestrela"></a>
-
 <a id="codigo-controlador-modulos-aestrela"></a>
 
 # codigo.controlador.modulos.aestrela
+
+* **code:**
+  [aestrela.py](../../../../codigo/controlador/modulos/aestrela.py)
+
+<a id="module-codigo.controlador.modulos.aestrela"></a>
 
 Implementação do algorítimo de busca A-estrela.
 
@@ -17,11 +20,11 @@ Base: [`object`](https://docs.python.org/3/library/functions.html#object)
 Implementa o algorítimo A\*, para obter o melhor caminho entre dois pontos de um mapa.
 
 Essa classe permite configurar um objeto que traça o menor caminho entre dois pontos
-em um mapa usando o algoŕitmo A\*. Para gerar o caminho, deve ser fornecido um mapa de
+em um mapa usando o algoítimo A\*. Para gerar o caminho, deve ser fornecido um mapa de
 entrada e as posições iniciais e finais do caminho.
 
 Os mapas usados nessa implementação são todos matrizes do Numpy do tipo matriz[y][x].
-O eixo y é apresentado primeiro para melhor compatibilidade com o OpenCV. Os pontos
+O eixo y é apresentado primeiro para melhor compatibilidade com o Numpy. Os pontos
 também usam o formato (y, x). A matriz do mapa que indica as posições permitidas para
 se mover e as que não são permitidas (paredes) utiliza valores do tipo uint8. É possível
 criar uma matriz desse tipo com o seguinte código:
@@ -54,6 +57,24 @@ Para fins de debug e verificação do funcionamento, é possível retornar um ma
 posições checadas ao gerar um caminho. Veja o método [`retorna_mapa_checados()`](#codigo.controlador.modulos.aestrela.AEstrela.retorna_mapa_checados) para mais
 informações.
 
+É possível aplicar uma função de smoothing ao caminho gerado. Ela é baseada na média dos pontos
+próximos. Veja o método [`gera_caminho_smoothing()`](#codigo.controlador.modulos.aestrela.AEstrela.gera_caminho_smoothing) para mais informações.
+
+Também é possível retornar um mapa com o caminho traçado. Veja o método [`gera_caminho_mapa()`](#codigo.controlador.modulos.aestrela.AEstrela.gera_caminho_mapa),
+e sua versão com smoothing [`gera_caminho_mapa_smoothing()`](#codigo.controlador.modulos.aestrela.AEstrela.gera_caminho_mapa_smoothing).
+
+Se deseja saber a direção inicial que deve ser seguida para alcançar o ponto de destino, use o método
+[`retorna_direcao_inicial()`](#codigo.controlador.modulos.aestrela.AEstrela.retorna_direcao_inicial).
+
+#### WARNING
+Esse algorítimo foi pensado para ser usado máscaras de algorítimos de segmentação semântica. Então
+foi desenvolvido para operar com paredes espessas: com pelo menos dois blocos de espessura. Usar
+esse algorítimo com mapas que possuem apenas um bloco de espessura pode resultar em comportamento
+inesperado, mas ele funciona adequadamente com mapas gerados por segmentação semântica.
+
+Se deseja ajustar esse algorítimo para funcionar com mapas com paredes e 1 bloco de espessura,
+ajuste o método [`_obtem_caminho()`](#codigo.controlador.modulos.aestrela.AEstrela._obtem_caminho).
+
 <a id="codigo.controlador.modulos.aestrela.AEstrela.__init__"></a>
 
 #### \_\_init_\_(passo=10)
@@ -72,9 +93,9 @@ Por exemplo, ao mover da posição (0, 1) para (0, 2), será adicionado um custo
 
 Checa se uma posição é valida para entrar na lista aberta.
 
-A posíção deve ser uma tupla do tipo (y, x).
+A posição deve ser uma tupla do tipo (y, x).
 
-Fatores levados em conta ao checar a validade:
+Fatores considerados ao checar a validade:
 
 * se a posição é uma parede (ou já esteve na lista aberta)
 * se a posição pertence ao mapa (não está extrapolando os limites)
@@ -82,7 +103,7 @@ Fatores levados em conta ao checar a validade:
 * **Parâmetros:**
   **pos** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição que será testada.
 * **Retorna:**
-  Se a posição é valida para entrar na lista aberta.
+  Se a posição é valida para entrar na lista aberta (não é colidível).
 * **Tipo de retorno:**
   [bool](https://docs.python.org/3/library/functions.html#bool)
 
@@ -92,11 +113,20 @@ Fatores levados em conta ao checar a validade:
 
 Computa o custo associado a uma posição do mapa.
 
-Acumula o custo da posição anterior (pai), mais o custo de um passo (configurado ao
-instanciar o objeto), mais o custo da função heurística e o custo definido pela
-matriz de custo extra (se houver uma).
+O custo associado a uma posição é dado pelos seguintes fatores:
 
-Se o passo (mudança de posição) ocorre na diagonal, o custo do passo é 0.414 vezes maior.
+- Custo da posição anterior (pai)
+- Custo do passo (mudança de posição)
+- Custo da função heurística
+- Custo da matriz de custo extra
+
+O custo associado ao passo é definido ao instanciar o objeto. Veja o método
+[`__init__()`](#codigo.controlador.modulos.aestrela.AEstrela.__init__) para mais detalhes.
+
+A matriz de custo extra é definida pelo método [`define_mapas()`](#codigo.controlador.modulos.aestrela.AEstrela.define_mapas).
+
+Se o passo (mudança de posição) ocorre na diagonal, o custo do passo é 0.414 vezes maior
+(a diagonal de um quadrado é 1.414 vezes o seu lado).
 
 * **Parâmetros:**
   * **posicao_atual** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição atual do ponto.
@@ -113,10 +143,11 @@ Se o passo (mudança de posição) ocorre na diagonal, o custo do passo é 0.414
 
 Função heurística do modelo.
 
-Consiste na distância entre os dois pontos (atual e final).
+A função heurística aplicada nesse algorítimo consiste na distância entre os
+dois pontos (atual e final).
 
 * **Parâmetros:**
-  **pos_atual** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição ponto atual.
+  **pos_atual** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição do ponto cujo custo da função heurística será computado.
 * **Retorna:**
   Custo associado a função heurística.
 * **Tipo de retorno:**
@@ -154,7 +185,7 @@ Funciona de forma semelhante ao método [`_gera_mapa_caminho()`](#codigo.control
 * **Parâmetros:**
   **vetor_caminho** ([*list*](https://docs.python.org/3/library/stdtypes.html#list)) – Vetor com os pontos do caminho.
 * **Retorna:**
-  Mapa com o caminho percorrido suavizado.
+  Mapa com o caminho percorrido (suavizado).
 * **Tipo de retorno:**
   [numpy.ndarray](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray)
 
@@ -183,7 +214,7 @@ saltando entre os elementos do ‘vetor_fechado’.
 
 #### \_obtem_caminho(pos_atual)
 
-Obtém o menor caminho entre os pontos.
+Define o menor caminho entre os pontos.
 
 Retorna um tupla do tipo (posicao_atual, posicao_pai, custo). A ‘posicao_atual’ é
 uma tupla contendo a posição (y, x) do último ponto andes de conectar com o ponto
@@ -210,7 +241,7 @@ O ponto a ser suavizado é o determinado pelo *indice* do *vetor*. O algorítimo
 
 * **Parâmetros:**
   * **vetor** ([*list*](https://docs.python.org/3/library/stdtypes.html#list)) – Vetor com os pontos.
-  * **indice** ([*int*](https://docs.python.org/3/library/functions.html#int)) – Indice do ponto no *vetor*.
+  * **indice** ([*int*](https://docs.python.org/3/library/functions.html#int)) – Índice do ponto no *vetor*.
   * **n_pontos** ([*int*](https://docs.python.org/3/library/functions.html#int)) – Quantidade de pontos adjacentes usados na suavização.
 * **Retorna:**
   Ponto suavizado.
@@ -251,8 +282,8 @@ não é o mesmo do método [`_ponto_smoothing()`](#codigo.controlador.modulos.ae
   [list](https://docs.python.org/3/library/stdtypes.html#list)
 
 #### NOTE
-Esse método não está sendo utilizado atualmente pela classe. Foi deixado para caso deseje substituir
-o algoritmo de suavização por esse.
+Esse método não está sendo utilizado atualmente pela classe. Foi deixado para caso o usuário
+deseje substituir o algoritmo de suavização por esse.
 
 <a id="codigo.controlador.modulos.aestrela.AEstrela.define_mapas"></a>
 
@@ -260,8 +291,8 @@ o algoritmo de suavização por esse.
 
 Define o mapa do ambiente onde será traçado o caminho.
 
-Deve ser forncido um mapa do ambiente onde será traçado o caminho. O mapa é uma matriz do Numpy tipo
-matriz[y][x] de inteiros onde 0 representa um lugar por onde pode ser traçado um caminho e 1, uma
+Deve ser fornecido um mapa do ambiente onde será traçado o caminho. O mapa é uma matriz do Numpy tipo
+matriz[y][x] de uint8 onde 0 representa um lugar por onde pode ser traçado um caminho e 1, uma
 barreira sólida que não pode ser ultrapassada.
 
 Também é possível fornecer um mapa de custo cujos valores serão somados a função heurística.
@@ -282,15 +313,17 @@ Executar esse método apaga o mapa e os resultados anteriores.
 
 Gera o melhor caminho do ponto inicial até o final no mapa.
 
-Retorna um vetor com esse caminho. Da posição inicial até a posição anterior ao ponto final.
+Retorna uma lista com esse caminho. Da posição inicial até a posição anterior ao ponto final.
+Ela é gerada com os métodos e [`_obtem_caminho()`](#codigo.controlador.modulos.aestrela.AEstrela._obtem_caminho) e [`_gera_vetor_caminho()`](#codigo.controlador.modulos.aestrela.AEstrela._gera_vetor_caminho).
 
-As posições devem ser uma tupla do tipo (pos_y, pos_x)
+As posições de início e de fim devem ser uma tupla do tipo (pos_y, pos_x). Os pontos da lista
+retornada também são desse formato.
 
 * **Parâmetros:**
   * **pos_inicial** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de início no mapa.
   * **pos_fim** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de destino do caminho no mapa.
 * **Retorna:**
-  Vetor com os pontos do caminho.
+  Lista com os pontos do caminho.
 * **Tipo de retorno:**
   [list](https://docs.python.org/3/library/stdtypes.html#list)
 
@@ -300,8 +333,9 @@ As posições devem ser uma tupla do tipo (pos_y, pos_x)
 
 Gera um mapa do caminho percorrido com o algorítimo A\*.
 
-Retorna um mapa com esse caminho. Esse mapa é um array Numpy do tipo matriz[y][x] de inteiros onde 1
-representa uma posição do caminho traçado, e 0 uma posição fora do caminho.
+O caminho gerado pelo método [`gera_caminho()`](#codigo.controlador.modulos.aestrela.AEstrela.gera_caminho) é usado para gerar um mapa. Esse mapa
+é um array Numpy do tipo matriz[y][x] de inteiros onde 1 representa uma posição do caminho
+traçado, e 0 uma posição fora do caminho.
 
 As posições devem ser uma tupla do tipo (pos_y, pos_x).
 
@@ -323,7 +357,7 @@ Funciona da mesma forma que o método [`gera_caminho_mapa()`](#codigo.controlado
 com uma técnica de suavização (smoothing).
 
 * **Parâmetros:**
-  * **pos_inicio** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de inicio no mapa.
+  * **pos_inicio** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de início no mapa.
   * **pos_fim** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de destino do caminho no mapa.
 * **Retorna:**
   Mapa com o caminho percorrido.
@@ -337,13 +371,14 @@ com uma técnica de suavização (smoothing).
 Gera o melhor caminho do ponto inicial até o final no mapa, com smoothing.
 
 Funciona da mesma forma que o método [`gera_caminho()`](#codigo.controlador.modulos.aestrela.AEstrela.gera_caminho), mas o caminho será ajustado
-com uma técnica de suavização (smoothing).
+com uma técnica de suavização (smoothing). A técnica de suavização é dada executada pelo
+método [`_vetor_smoothing()`](#codigo.controlador.modulos.aestrela.AEstrela._vetor_smoothing).
 
 * **Parâmetros:**
-  * **pos_inicial** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de inicio no mapa.
+  * **pos_inicial** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de início no mapa.
   * **pos_fim** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de destino do caminho no mapa.
 * **Retorna:**
-  Vetor com os pontos do caminho.
+  Lista com os pontos do caminho.
 * **Tipo de retorno:**
   [list](https://docs.python.org/3/library/stdtypes.html#list)
 
@@ -355,7 +390,11 @@ Retorna a direção inicial que deve ser seguida para percorrer o caminho.
 
 Retorna um ângulo em radiano ou em graus, dependendo do parâmetro *rad*. Ele corresponde ao ângulo,
 usando as convenções matemáticas padrões, da abertura entre o eixo x da região inferior do mapa e direção
-do caminho percorrido.
+do caminho percorrido, como ilustrado na imagem abaixo.
+
+![image](../../../../codigo/controlador/img/direcao-inicial-do-aestrela.svg)
+
+Fonte: autoria própria
 
 * **Parâmetros:**
   * **pos_inicio** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição de início no mapa.

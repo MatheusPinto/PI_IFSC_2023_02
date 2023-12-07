@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.teste.video_client"></a>
-
 <a id="codigo-interface-teste-video-client"></a>
 
 # codigo.interface.teste.video_client
+
+* **code:**
+  [video_client.py](../../../../codigo/interface/teste/video_client.py)
+
+<a id="module-codigo.interface.teste.video_client"></a>
 
 Teste do stream de video - cliente.
 

@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.modulos.video"></a>
-
 <a id="codigo-interface-modulos-video"></a>
 
 # codigo.interface.modulos.video
+
+* **code:**
+  [video.py](../../../../codigo/interface/modulos/video.py)
+
+<a id="module-codigo.interface.modulos.video"></a>
 
 Módulo de captura de vídeo.
 

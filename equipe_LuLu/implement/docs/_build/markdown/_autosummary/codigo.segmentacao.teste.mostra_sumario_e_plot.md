@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.teste.mostra_sumario_e_plot"></a>
-
 <a id="codigo-segmentacao-teste-mostra-sumario-e-plot"></a>
 
 # codigo.segmentacao.teste.mostra_sumario_e_plot
+
+* **code:**
+  [mostra_sumario_e_plot.py](../../../../codigo/segmentacao/teste/mostra_sumario_e_plot.py)
+
+<a id="module-codigo.segmentacao.teste.mostra_sumario_e_plot"></a>
 
 Mostra o sumário e plot do modelo.
 

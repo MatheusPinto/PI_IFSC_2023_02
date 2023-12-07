@@ -255,7 +255,7 @@ sudo apt install python3-opencv
 
 O adaptador wifi usado foi o [LV-UW06](https://produto.mercadolivre.com.br/MLB-1881821475-adaptador-pendrive-wifi-usb-wireless-notebook-pc-80211n-_JM#position=26&search_layout=grid&type=item&tracking_id=61c3c931-ecfa-43d7-ae36-3989f0f1fbb3). Ele utiliza o driver RTL8188FTV, como mostrado na imagem abaixo:
 
-![Driver adaptador USB](raspberry/img/driver-adaptador.png)
+![Driver adaptador USB](img/driver-adaptador.png)
 
 No Linux, pode-se utilizar o módulo [rtl8188fu](https://github.com/kelebek333/rtl8188fu).
 

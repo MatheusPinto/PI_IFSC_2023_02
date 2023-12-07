@@ -1,8 +1,11 @@
-<a id="module-codigo.interface.modulos.TLSstream"></a>
-
 <a id="codigo-interface-modulos-tlsstream"></a>
 
 # codigo.interface.modulos.TLSstream
+
+* **code:**
+  [TLSstream.py](../../../../codigo/interface/modulos/TLSstream.py)
+
+<a id="module-codigo.interface.modulos.TLSstream"></a>
 
 Módulo para gerenciar streams de dados via TCP com suporte a TLS.
 
@@ -20,7 +23,9 @@ Um que envia dados, e outro que recebe dados.
 O envio e recebimento de dados é feito exigindo a confirmação pelo outro lado da comunicação. Ou seja, se um frame
 (conjunto de dados enviado) for enviado, o lado recebedor envia uma confirmação para o lado que enviou.
 
-Não use a classe \_TLSstreamBase. Ela serve apenas de base para as demais classes.
+### Notas
+
+Não use a classe [`_TLSstreamBase`](#codigo.interface.modulos.TLSstream._TLSstreamBase). Ela serve apenas de base para as demais classes.
 
 <a id="codigo.interface.modulos.TLSstream.TLSclient"></a>
 

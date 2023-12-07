@@ -17,7 +17,10 @@ Um que envia dados, e outro que recebe dados.
 O envio e recebimento de dados é feito exigindo a confirmação pelo outro lado da comunicação. Ou seja, se um frame
 (conjunto de dados enviado) for enviado, o lado recebedor envia uma confirmação para o lado que enviou.
 
-Não use a classe `_TLSstreamBase`. Ela serve apenas de base para as demais classes.
+Notes
+-----
+
+Não use a classe :class:`_TLSstreamBase`. Ela serve apenas de base para as demais classes.
 """
 
 

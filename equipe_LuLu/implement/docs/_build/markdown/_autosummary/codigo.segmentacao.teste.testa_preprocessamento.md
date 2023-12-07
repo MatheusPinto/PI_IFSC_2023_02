@@ -1,8 +1,11 @@
-<a id="module-codigo.segmentacao.teste.testa_preprocessamento"></a>
-
 <a id="codigo-segmentacao-teste-testa-preprocessamento"></a>
 
 # codigo.segmentacao.teste.testa_preprocessamento
+
+* **code:**
+  [testa_preprocessamento.py](../../../../codigo/segmentacao/teste/testa_preprocessamento.py)
+
+<a id="module-codigo.segmentacao.teste.testa_preprocessamento"></a>
 
 Testa o preprocessamento do dataset.
 
