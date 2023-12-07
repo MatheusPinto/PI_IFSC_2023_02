@@ -6,6 +6,12 @@
 Testa se o controlador consegue definir corretamente a direção.
 
 O mapa é uma imagem definida pelo parâmetro *IMAGEM_PATH*.
+
+O resultado esperado está abaixo:
+
+.. image:: /../../../../codigo/controlador/img/teste-direcao.png
+
+Fonte: autoria própria.
 """
 
 
@@ -15,16 +21,19 @@ import numpy as np
 import cv2 as cv
 
 
+IMAGEM_PATH = "imagens-teste/mapa.png"
+PONTO_DESTINO = (10, 10, 30, 30)
 
 
 if __name__ == "__main__":
-    imagem = cv.imread("imagens-teste/mapa.png")
+    imagem = cv.imread(IMAGEM_PATH)
 
     if imagem is None:
         print("Não é possível carregar a imagem! abortando programa...")
         exit(1)
 
-    # Cria o mapa com base na imagem
+    # Cria o mapa e a imagem de debug com base na imagem original
+    img_debug = cv.resize(imagem, (500, 500))
     imagem = cv.cvtColor(imagem, cv.COLOR_BGR2GRAY)
 
     # Normaliza o mapa para usar no algorítimo A*
@@ -37,20 +46,16 @@ if __name__ == "__main__":
             (-15, -7)
             ]
 
-    ctrl = controlador.Controlador((50, 50), posicoes_esquerda, 3)
+    ctrl = controlador.Controlador((50, 50), posicoes_esquerda, 3, 10)
 
     # Processa a imagem
-    linear, angular, imagem = ctrl.calcula_direcao(mapa, (1, 1), debug=True)
-
-    # Ajusta o mapa para realizar o blend das imagens
-    mapa = cv.cvtColor(mapa*255, cv.COLOR_GRAY2BGR)
-    mapa = cv.resize(mapa, (50, 50))
+    ctrl.define_mapa(mapa, img_debug)
+    linear, angular, sinalizacao = ctrl.calcula_direcao(None, PONTO_DESTINO, debug=True)
 
     # Mostra a imagem com os indicadores de direção
-    imagem = cv.addWeighted(imagem, 0.5, mapa, 0.5, 0.0)
-    cv.imshow("debug", imagem)
+    cv.imshow("debug", ctrl.retorna_imagem_debug())
 
-    print("Linear: {}, Angular: {}".format(linear, angular))
+    print("Linear: {}, Angular: {}, Sinalização: {}".format(linear, angular, sinalizacao))
 
     while True:
         key = cv.waitKey(1)

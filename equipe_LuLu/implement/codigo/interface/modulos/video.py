@@ -20,7 +20,7 @@ import cv2 as cv
 import os
 
 
-def codifica_frame(frame: np.ndarray) -> bytes:
+def codifica_frame(frame: np.ndarray):
     """Codifica uma frame de imagem para bytes.
 
     O frame deve ser um array do numpy do tipo uint8, no formato BGR do OpenCV. Ele será convertido para
@@ -44,7 +44,7 @@ def codifica_frame(frame: np.ndarray) -> bytes:
     return frame
 
 
-def decodifica_frame(frame: bytes) -> np.ndarray:
+def decodifica_frame(frame: bytes):
     """Decodifica uma frame de bytes para a imagem.
 
     O frame deve ser uma lista de bytes. Ele será convertido para um array do numpy do tipo uint8 no formato

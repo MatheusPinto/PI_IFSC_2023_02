@@ -14,6 +14,7 @@ Utiliza o segmentador.
 
 import test
 import modulos.interpretador as interpretador
+import tensorflow as tf
 import cv2 as cv
 import numpy as np
 import os
@@ -45,26 +46,22 @@ if __name__ == "__main__":
         if not ret:
             break
 
-        # Normalização do frame
-        norm_img = np.zeros(segmentador.retorna_formato_entrada()[:2])
-        frame = cv.normalize(frame,  norm_img, 0, 255, cv.NORM_MINMAX)
-
         # Segmentação do frame
-        frame_segmentado = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-        frame = segmentador.retorna_imagem_segmentada(frame_segmentado)
+        frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+        frame = segmentador.retorna_imagem_segmentada(frame, redimensiona=True)
 
         # Redimensiona para o formato de saída
         frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
         frame = cv.resize(frame, FORMATO_SAIDA)
+
+        # Salva o frame no vídeo de saída
+        saida.write(frame)
 
         # Mostra o vídeo durante o processamento
         cv.imshow("segmenta_video.py", frame)
         key = cv.waitKey(1)
         if key==ord('q'):
             break
-
-        # Salva o frame no vídeo de saída
-        saida.write(frame)
 
     entrada.release()
     saida.release()

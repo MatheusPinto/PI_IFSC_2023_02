@@ -3,8 +3,14 @@
 
 """Script principal do Wall-e.
 
-Realiza o streaming de vídeo. Recebe a direção do cliente e aplica no movimento do Wall-e. Além de executar os
+Realiza o streaming de vídeo. Captura a imagem de uma câmera, converte para JPG e envia
+para o usuário de forma criptografada.
+
+Recebe a direção do cliente e aplica no movimento do Wall-e. Além de executar os
 comandos recebidos do Wall-e: desligar e sinalizar que encontrou lixo.
+
+Gerencia os motores DC e servo motores. Se não receber nenhuma instrução do usuário depois de um
+determinado tempo, para os motores por segurança.
 """
 
 
@@ -63,22 +69,29 @@ if __name__ == "__main__":
         if dados == "halt":
             os.system("shutdown now")
 
-        if dados == "sinalizar":
+        if dados == "lixo":
             mov.sinaliza_lixo()
 
         else:
-            # Atualiza o tempo de atualização para que o movimento do wall-e não seja desligado.
+            # Atualiza o tempo de atualização para que o movimento do Wall-e não seja desligado.
             global tempo_parar_motor
             tempo_parar_motor = time.time()
 
             # As velocidades são recebidas no formato "linear,angular". É necessário separá-las
             # e converter para float antes de aplicar ao motor
-            linear, angular = dados.split(',')
-            linear = (float(linear))
-            angular = (float(angular))
+            linear, angular = 0, 0
+            try:
+                linear, angular = dados.split(',')
+                
+                linear = (float(linear))
+                angular = (float(angular))
 
-            print(linear, angular)
-            mov.define_velocidade(linear, angular)
+            except:
+                print("Comando inválido!")
+
+            finally:
+                print(linear, angular)
+                mov.define_velocidade(linear, angular)
 
     # Configuração da conexão
     recebedor_comandos.recv_set(callback_recebimento)
@@ -104,12 +117,18 @@ if __name__ == "__main__":
     tread_parar_movimento = Thread(target=parar_movimento)
     tread_parar_movimento.start()
 
+    # Loop responsável por enviar o frame do servidor para o cliente. Apenas faz isso se não estiver
+    # sinalizando lixo.
     while True:
-        # Captura um frame da câmera
-        frame = camera.retorna_frame(codificar=True)
+        if mov.esta_sinalizando_lixo():
+            time.sleep(0.5)
 
-        # Envia o frame
-        enviador_video.send(frame)
+        else:
+            # Captura um frame da câmera
+            frame = camera.retorna_frame(codificar=True)
+
+            # Envia o frame
+            enviador_video.send(frame)
 
     # Finaliza o programa
     enviador_video.close()

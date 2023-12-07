@@ -1,8 +1,8 @@
 # Código do algorítimo de segmentação
 
-Os códigos disponíveis nesse diretório são referentes ao algorítimo de segmentação semântica usado para identificar qual parte da imagem é se refere a um objeto colidível e qual se refere a uma região segura para se locomover.
+Os códigos disponíveis nesse diretório são referentes ao algorítimo de segmentação semântica usado para identificar qual parte da imagem se refere a um objeto colidível e qual se refere a uma região segura para se locomover.
 
-Conforme descrito no [Design do modo autônomo](../../../design/autonomo.md), o modelo de segmentação deveria ser o uNET com o mobilnetV3 como backbone. Todavia, os resultados do mobilenetV3 deixaram a desejar. Abaixo temos uma imagem do dataset segmentado usando o modelo com o MobilenetV3 como backbone. O Script do modelo é o [mobilenet_v3_unet.py](./modulos/mobilenet_v3_unet.py).
+Conforme descrito no [Design do modo autônomo](../../../design/autonomo.md), o modelo de segmentação deveria ser o uNET com o mobilnetV3 como backbone. Todavia, os resultados do mobilenetV3 deixaram a desejar. Abaixo temos uma imagem de um dataset segmentado usando o modelo com o MobilenetV3 como backbone. O Script do modelo é o [mobilenet_v3_unet.py](modulos/mobilenet_v3_unet.py).
 
 ![Teste mobilenetV3](img/mobilenetV3-paredes-verdes.png)
 
@@ -19,10 +19,10 @@ Os scripts de teste estão no diretório ['teste/'](teste/). A documentação de
 
 ## Dependências
 
-Para executar os códigos desse diretório é necessário ter o Python 3 e os módulos do Tensorflow. O modulo pode ser instalado pelo PIP3:
+Para executar os códigos desse diretório é necessário ter o Python 3 e os módulos do Tensorflow e Matplotlib. Eles podem ser instalado pelo PIP3:
 
 ```shell
-pip3 install tensorflow
+pip3 install tensorflow matplotlib
 ```
 
 
@@ -36,6 +36,6 @@ A criação do modelo foi feita usando o script [cria_modelo.py](cria_modelo.py)
 
 Após isso, é necessário converter o modelo para o formato ftlite para poder ser usado pelo interpretador. Para isso, há o script [converte_tflite.py](converte_tflite.py).
 
-Foi dessa forma que os modelos foram treinados, tanto o mobilenetV3 quanto o uNET. Como os modelos são relativamente grandes para o Github mais de 50M. Optou-se por colocá-los no Google Drive e disponibilizar um Link para baixá-los. Para usá-los nesse projeto, basta renomeá-los para "modelo-segmentacao.tflite" e colocá-los o diretório corrente.
+Foi dessa forma que os modelos foram treinados, tanto o mobilenetV3 quanto o uNET. Como arquivos dos modelos são relativamente grandes para o Github mais de 50M. Optou-se por colocá-los no Google Drive e disponibilizar um Link para baixá-los. Para usá-los nesse projeto, basta renomeá-los para "modelo-segmentacao.tflite" e colocá-los o diretório corrente.
 
-[Link modelos](https://drive.google.com/drive/folders/1nrGsP_DmO5J_bQVRl8AJAn03w0g4jKTi?usp=drive_link)
+[Link modelos](https://drive.google.com/drive/folders/1dwD33YQNWmXR4oi_z7RVapRyitmweZZ_?usp=drive_link)

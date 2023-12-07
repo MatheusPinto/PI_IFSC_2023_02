@@ -19,7 +19,7 @@ EPOCHS = 60
 
 
 class _RestauraSeAcuraciaValidacaoForBaixa(tf.keras.callbacks.Callback):
-    """Callback usada no treinamento para finalizá-lo se a acurácia de validação for baixa.
+    """Callback usada no treinamento para restaurá-lo se a acurácia de validação for baixa.
 
     No final de cada época, checa se a acurácia de validação é muito baixa. Se for, restaura o
     modelo para melhor versão e continua o treinamento.
@@ -84,7 +84,10 @@ class _RestauraSeAcuraciaValidacaoForBaixa(tf.keras.callbacks.Callback):
             )
 
 
-def treina_modelo(modelo, path: str = "modelo-segmentacao", backbone=False, acuracia_minima=None):
+def treina_modelo(
+        modelo : tf.keras.Model, path: str = "modelo-segmentacao",
+        backbone: bool = False, acuracia_minima: float = None
+        ):
     """Treina um modelo do Tensorflow.
 
     O modelo é dado pelo parâmetro *modelo*. Deve ser um modelo do Tensorflow pré-carregado. O path dos datasets
@@ -111,7 +114,7 @@ def treina_modelo(modelo, path: str = "modelo-segmentacao", backbone=False, acur
     Parameters
     ----------
     modelo : tf.keras.Model
-        O modelo do Tensorflow.
+        O modelo do Tensorflow que será treinado.
 
     path : str, default="modelo-segmentacao"
         O path da pasta em que os dados relacionados ao modelo serão salvos.

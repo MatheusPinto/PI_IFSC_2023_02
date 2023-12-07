@@ -1,12 +1,12 @@
 #!/bin/env python3
 
 
-"""Segmenta um vídeo.
+"""Segmenta um vídeo e aplica o controlador.
 
-O arquivo do vídeo é definido pelo parâmetro 'VIDEO_PATH'. Antes dos frames serem segmentados,
+O resultado da segmentação com o debug do controlador é salvo no arquivo 'SAIDA_PATH'.
+
+O arquivo do vídeo é definido pelo parâmetro 'VIDEO_PATH'. Antes dos frames serem salvos,
 eles serão redimensionadas para o formato dado pelo parâmetro 'FORMATO_SAIDA'.
-
-O resultado é salvo no arquivo dado por 'SAIDA_PATH'.
 """
 
 

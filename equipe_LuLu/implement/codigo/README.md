@@ -1,6 +1,6 @@
 # Implementação do código
 
-Nessa página está descrito a implementação do código do projeto. O código foi dividido em submódulos, cuja documentação está disponível na [documentação dos módulos](../docs/_build/markdown/index.md). Cada submódulo possui sua própria pasta de 'teste/' contendo os scripts de teste dele. O código final (do cliente e do Wall-e) está no diretório corrente. São os scripts [cliente.py](cliente.py) e [walle.py](walle.py). Eles utilizam os demais módulos para funcionar. Portanto, também é necessário enviar alguns dos módulos para o Wall-e.
+Nessa página está descrito a implementação do código do projeto. O código foi dividido em submódulos, cuja documentação está disponível na [documentação do código em Python](../docs/_build/markdown/index.md). Cada submódulo possui sua própria pasta de 'teste/' contendo os scripts de teste dele. O código final (do cliente e do Wall-e) está no diretório corrente. São os scripts [cliente.py](cliente.py) e [walle.py](walle.py). Eles utilizam os demais módulos para funcionar. Portanto, também é necessário enviar alguns dos módulos para o Wall-e.
 
 Os submódulos estão listados abaixo:
 
@@ -18,7 +18,7 @@ O treinamento do modelo de identificação do lixo está listado no diretório [
 As configurações necessárias se resumem à:
 
 - [Configurações de ambiente](ambiente.md): Se refere às configurações das credenciais e de identificação do Wall-e (IP e usuário).
-- [Configuração da raspberry](raspberry): Configurações em geral realizadas na Raspberry Pi.
+- [Configuração da Raspberry](raspberry): Configurações em geral realizadas na Raspberry Pi.
 
 
 ## Acesso remoto via SSH e Rsync
@@ -37,9 +37,9 @@ E um que facilita a sincronização do código pelo Rsync:
 make rsync
 ```
 
-Para tal, é necessário que tanto o computador atual quanto a Raspberry Pi possuam o Dropbear (servidor SSH) e o Rsunc instalados.
+Para tal, é necessário que tanto o computador atual quanto a Raspberry Pi possuam o Dropbear (servidor SSH) e o Rsync instalados.
 
-OBS.: Não há versão do Rsync para windows, mas é possível executá-lo com o [WLS](https://learn.microsoft.com/pt-br/windows/wsl/install).
+**Observação:** Não há versão do Rsync para Windows, mas é possível executá-lo com o [WLS](https://learn.microsoft.com/pt-br/windows/wsl/install).
 
 
 # Dica para executar os códigos da Raspberry Pi.

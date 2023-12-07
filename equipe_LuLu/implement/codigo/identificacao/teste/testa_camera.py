@@ -3,8 +3,18 @@
 
 """Testa a identificação de lixo no vídeo capturado pela webcam.
 
-O teste mostra os lixos identificados com quadrados verdes ao seu redor. O lixo mais próximo é
-marcado com um círculo vermelho.
+O teste mostra os lixos identificados e qual é o mais próximo. As marcações são feitas de acordo com os
+métodos :meth:`~codigo.identificacao.modulos.identificador.Identificador.identifica_lixo_mais_proximo()`
+e :meth:`~codigo.identificacao.modulos.identificador.Identificador.identifica_lixos()`. Ambos da classe
+:class:`~codigo.identificacao.modulos.identificador.Identificador`.
+
+O modelo de Haar cascade é definido pelo parâmetro 'CASCADE'.
+
+Resultado experado:
+
+.. image:: /../../../../codigo/identificacao/img/teste-deteccao-webcam.gif
+
+Fonte: autoria própria.
 """
 
 
@@ -13,12 +23,15 @@ import modulos.identificador as identificador
 import cv2 as cv
 
 
+CASCADE = "../cascade-leite.xml"
+
+
 if __name__ == "__main__":
     # Capturador de video
     cap = cv.VideoCapture(0)
 
     # Inicializa o identificador
-    ident_lixo = identificador.Identificador("../cascade.xml", (160, 120))
+    ident_lixo = identificador.Identificador(CASCADE, (160, 120))
 
     # Captura um frame
     while True:
@@ -27,9 +40,9 @@ if __name__ == "__main__":
         if not ret:
             break
 
-        classificacao, imagem = ident_lixo.identifica_lixo_proximo(frame, debug=True)
+        classificacao = ident_lixo.identifica_lixo_mais_proximo(frame, debug=True)
 
-        cv.imshow("Frame", imagem)
+        cv.imshow("Frame", ident_lixo.retorna_imagem_debug())
 
         # Espera até apertar 'q'
         if cv.waitKey(1) & 0xFF == ord('q'):

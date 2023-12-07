@@ -1,0 +1,3 @@
+# Ignorar todos os demais arquivos dentro dessa pasta
+*
+!/.gitignore

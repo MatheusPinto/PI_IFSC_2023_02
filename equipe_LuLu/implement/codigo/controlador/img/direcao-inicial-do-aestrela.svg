@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500"
+   height="500"
+   viewBox="0 0 132.29167 132.29167"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="direcao-inicial-do-aestrela.svg"
+   inkscape:export-filename="/home/lucas/Repositories/PI_IFSC_2023_02/equipe_LuLu/implement/codigo/controlador/img/direcao-inicial-do-aestrela.png"
+   inkscape:export-xdpi="25.4"
+   inkscape:export-ydpi="25.4"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     width="500px"
+     inkscape:zoom="0.81257768"
+     inkscape:cx="244.89966"
+     inkscape:cy="342.73646"
+     inkscape:window-width="1336"
+     inkscape:window-height="712"
+     inkscape:window-x="15"
+     inkscape:window-y="41"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path964" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path961" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.262758px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="M 0.22833368,130.00358 129.42615,129.99864"
+       id="path877" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.31354px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 65.000195,130.25332 -0.003,-119.029358"
+       id="path879" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="54.110607"
+       y="8.1385231"
+       id="text6013"><tspan
+         sodipodi:role="line"
+         id="tspan6011"
+         style="stroke-width:0.264583"
+         x="54.110607"
+         y="8.1385231">y</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="122.70187"
+       y="123.6236"
+       id="text8915"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="122.70187"
+         y="123.6236"
+         id="tspan8917">x</tspan></text>
+    <path
+       style="fill:none;stroke:#969696;stroke-width:2.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 65.000195,130.25332 32.767502,98.01966 32.789537,39.239422 21.406311,23.478588"
+       id="path4058" />
+    <path
+       style="fill:#ff0000;stroke:#969696;stroke-width:0.265;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path5995"
+       sodipodi:type="arc"
+       sodipodi:cx="65.000198"
+       sodipodi:cy="130.25333"
+       sodipodi:rx="13.754364"
+       sodipodi:ry="12.349962"
+       sodipodi:start="4.0779176"
+       sodipodi:end="6.2738619"
+       sodipodi:arc-type="slice"
+       d="m 56.847274,120.30685 a 13.754364,12.349962 0 0 1 14.302256,-1.10048 13.754364,12.349962 0 0 1 7.604435,10.93181 l -13.753767,0.11515 z" />
+  </g>
+</svg>

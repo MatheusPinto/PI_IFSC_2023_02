@@ -8,15 +8,14 @@ Os módulos criados para implementar esse projeto estão no diretório ['modulos
 
 Os scripts de teste estão no diretório ['teste/'](teste/). A documentação deles está disponível em [documentação dos scripts de teste](../../docs/_build/markdown/_autosummary/codigo.movimento.teste.md).
 
-Também há alguns scripts de teste usados durante a etapa de validação do funcionamento dos motores DC e de passo. Eles estão no diretório [teste_validacao](teste_validacao). A documentação deles está disponível em [documentação dos scripts de teste](../../docs/_build/markdown/_autosummary/codigo.movimento.teste_validacao.md).
+Também há alguns scripts de teste usados durante a etapa de validação do funcionamento dos motores DC e de passo. Eles estão no diretório [teste_validacao](teste_validacao). A documentação deles está disponível em [documentação dos scripts de teste da validação](../../docs/_build/markdown/_autosummary/codigo.movimento.teste_validacao.md).
 
 
 
 ## Dependências
 
-É possível rodar os códigos no próprio computador para fins de teste. Para isso, é necessário ter o Python 3. No caso de estar em uma Raspberry Pi, deve-se possuir o módulo 'RPi.GPIO'. Como esse módulo foi instalado na Raspberry Pi está descrito na página de [configuração da Raspberry Pi](../raspberry).
-
+É possível rodar os códigos no próprio computador para fins de teste. Para isso, é necessário ter o Python 3. No caso de estar em uma Raspberry Pi, deve-se possuir o módulo 'RPi.GPIO'. A instalação desse módulo na Raspberry Pi está descrita na página de [configuração da Raspberry Pi](../raspberry).
 
 No caso de estar executando os scripts desse módulo fora da Raspberry Pi (apenas para simulação), há uma versão de simulação do módulo disponível no diretório [fake_RPi](fake_RPi).
 
-OBS.: Ao enviar esse código para a Raspberry Pi, o diretório [fake_RPi](fake_RPi) não pode estar incluído. Por isso, o Rsync foi configurado para ignorá-lo.
+**Observações:** Ao enviar esse código para a Raspberry Pi, o diretório [fake_RPi](fake_RPi) não pode estar incluído. Por isso, o Rsync foi configurado para ignorá-lo.

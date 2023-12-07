@@ -7,11 +7,7 @@ Implementação da geração de imagens e suas máscaras por meio de computaçã
 
 É possível alterar a cor, textura, caminho da câmera, formato e posições dos objetos desses modelos para gerar as imagens.
 
-Há dois scripts para auxiliar na geração das imagens: [cria_diretorios.py](cria_diretorios.py) e [define_material.py](define_material.py).
-
-O primeiro cria o diretório onde estarão as imagens geradas pelo Blender. Ele apaga o anterior, então cuidado ao usar.
-
-O segundo é feito para ser usado apenas dentro da interface de Scripting do Blender. Ele muda os materiais dos objetos para mostrar a imagem original, ou a máscara de colisão. Ajustando o parâmetro 'MATERIAL_INDICE' para 1 e executando, as máscaras são aplicadas a todos os objetos.
+Há um script para auxiliar na geração das imagens: [define_material.py](define_material.py). Ele foi feito para ser usado apenas dentro da interface de Scripting do Blender. Não execute fora dela. Sua função é mudar os materiais dos objetos para mostrar a imagem original, ou a máscara de colisão. Ajustando o parâmetro *MATERIAL_INDICE* para 1 e executando, as máscaras são aplicadas a todos os objetos.
 
 ![Máscara aplicada](img/mascara-aplicada.png)
 
@@ -24,16 +20,18 @@ A documentação dos scripts dessa pasta estão disponíveis em [documentação 
 
 ## Exportar imagens
 
-Primeiramente será explicado como exportar as imagens originais. É necessário que o diretório das imagens já tenha sido criado com o script [cria_diretorios.py](cria_diretorios.py).
+Primeiramente será explicado como exportar as imagens originais.
 
 Para exportar as imagens, primeiramente mude a cena atual para 'Original', como no exemplo abaixo:
 
 ![Mudar cena](img/mudar-cena.png)
 
-Após isso, execute o script [define_material.py](define_material.py) com o parâmetro 'MATERIAL_INDICE' igual a 2. Agora basta renderizar a animação. As imagens serão salvas no diretório "blender-output/original/".
+Após isso, execute o script [define_material.py](define_material.py) com o parâmetro *MATERIAL_INDICE* igual a 2. Agora basta renderizar a animação. As imagens serão salvas no diretório "blender-output/original/". O Blender criar esse diretório por conta própria.
 
 ![Renderizar](img/renderizar.png)
 
-Para renderizar as máscaras, o processo é análogo. Primeiramente, mude a cena para 'Mascara'. Depois, execute o script [define_material.py](define_material.py) com o parâmetro 'MATERIAL_INDICE' igual a 1. As imagens estão salvas no diretório "blender-output/mascara/".
+Para renderizar as máscaras, o processo é análogo. Primeiramente, mude a cena para 'Mascara'. Depois, execute o script [define_material.py](define_material.py) com o parâmetro *MATERIAL_INDICE* igual a 1. As imagens estão salvas no diretório "blender-output/mascara/".
 
 Agora basta copiar o diretório "blender-output" para dentro do diretório "../imagens-dataset" e prosseguir com a [criação do dataset](../)
+
+**Importante:** Antes de criar um conjunto de imagens e máscaras, recomenda-se excluir o antigo diretório "blender-output/" para evitar que as antigas imagens geradas continuem nele. Isso deve ser feito manualmente, não há script ou função do Blender que automatize isso.

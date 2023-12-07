@@ -1,12 +1,20 @@
 #!/bin/env python3
 
 
-"""Testa a identificação de lixo em uma imagem.
+"""Testa a identificação dos lixos em uma imagem.
 
-O teste mostra os lixos identificados com quadrados verdes ao seu redor. O lixo mais próximo é
-marcado com um círculo vermelho.
+A imagem é definida pelo parâmetro 'IMAGEM'. O modelo de Haar cascade é definido pelo parâmetro 'CASCADE'.
 
-A imagem é definida pelo parâmetro 'IMAGEM'.
+O teste mostra os lixos identificados. As marcações são feitas de acordo com os
+métodos :meth:`~codigo.identificacao.modulos.identificador.Identificador.identifica_lixo_mais_proximo()`
+e :meth:`~codigo.identificacao.modulos.identificador.Identificador.identifica_lixos()`. Ambos da classe
+:class:`~codigo.identificacao.modulos.identificador.Identificador`.
+
+Resultado experado:
+
+.. image:: /../../../../codigo/identificacao/img/imagem-identificacao.png
+
+Fonte: autoria própria.
 """
 
 
@@ -17,11 +25,12 @@ import os
 
 
 IMAGEM = "imagens-teste/imagem.png"
+CASCADE = "../cascade-leite.xml"
 
 
 if __name__ == "__main__":
     # Inicializa o identificador
-    ident_lixo = identificador.Identificador("../cascade.xml", (160,120))
+    ident_lixo = identificador.Identificador(CASCADE, (160, 120))
 
     # Carrega a imagem
     frame = cv.imread(IMAGEM)
@@ -31,9 +40,9 @@ if __name__ == "__main__":
         raise Exception(f"Imagem {IMAGEM} não encontrada")
 
     # Classificação
-    classificacao, imagem = ident_lixo.identifica_lixo_proximo(frame, debug=True)
+    classificacao = ident_lixo.identifica_lixos(frame, debug=True)
 
-    cv.imshow("Frame", imagem)
+    cv.imshow("Frame", ident_lixo.retorna_imagem_debug())
 
     # Espera até apertar 'q'
     while True:

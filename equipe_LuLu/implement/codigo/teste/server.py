@@ -3,10 +3,12 @@
 
 """Servidor que simula o Wall-e.
 
-Captura a imagem de uma câmera, converte para JPG e envia para o
-usuário de forma criptografada.
+Captura a imagem de uma câmera, converte para JPG e envia para o usuário de forma criptografada.
 
 Apresenta todos os dados recebidos do usuário.
+
+Gerencia os motores DC e servo motores. Se não receber nenhuma instrução do usuário depois de um
+determinado tempo, para os motores por segurança.
 """
 
 
@@ -61,6 +63,10 @@ if __name__ == "__main__":
         if dados == "halt":
             print("Desligando...")
 
+        if dados == "lixo":
+            print("Lixo identifiado!")
+            mov.sinaliza_lixo()
+
         else:
             # Atualiza o tempo de atualização para que o movimento do Wall-e não seja desligado.
             global tempo_parar_motor
@@ -100,12 +106,18 @@ if __name__ == "__main__":
     tread_parar_movimento = Thread(target=parar_movimento)
     tread_parar_movimento.start()
 
+    # Loop responsável por enviar o frame do servidor para o cliente. Apenas faz isso se não estiver
+    # sinalizando lixo.
     while True:
-        # Captura um frame da câmera
-        frame = camera.retorna_frame(codificar=True)
+        if mov.esta_sinalizando_lixo():
+            time.sleep(0.5)
 
-        # Envia o frame
-        enviador_video.send(frame)
+        else:
+            # Captura um frame da câmera
+            frame = camera.retorna_frame(codificar=True)
+
+            # Envia o frame
+            enviador_video.send(frame)
 
     # Finaliza o programa
     enviador_video.close()

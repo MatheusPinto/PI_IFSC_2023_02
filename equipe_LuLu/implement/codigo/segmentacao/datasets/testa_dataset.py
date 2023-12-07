@@ -25,10 +25,7 @@ if __name__ == "__main__":
 
     for imagem, mascara in dataset.take(1):
         imagem = imagem[0].numpy()
-        print(imagem)
-
         mascara = mascara[0].numpy()
-        print(mascara)
 
     # Mostra as imagens e suas máscaras. Será separado em duas colunas, as imagens na coluna
     # da esquerda, e as máscaras na coluna da direita. Preenche uma linha por vez.

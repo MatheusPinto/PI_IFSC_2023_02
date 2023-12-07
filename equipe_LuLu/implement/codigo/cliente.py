@@ -3,7 +3,7 @@
 
 """Script principal do usuário.
 
-Implemnta o código que é executado do lado do usuário (cliente). Ou seja, implementa a interface
+Implementa o código que é executado do lado do usuário (cliente). Ou seja, implementa a interface
 do usuário e o modo autônomo.
 """
 
@@ -27,7 +27,11 @@ log_pasta = "log/"
 credencias_pasta = "env/comunicacao"
 
 MODELO_TFLITE_PATH = "segmentacao/modelo-segmentacao.tflite"
-FORMATO_SAIDA = (640, 480)
+
+DISTANCIA_MINIMA = 20
+PATH_HAAR = "identificacao/cascade-leite.xml"
+
+DEBUG = True
 
 
 if __name__ == "__main__":
@@ -36,16 +40,17 @@ if __name__ == "__main__":
     HOST = IP
 
     # Carrega o segmentador de imagens (usa apenas uma thread)
-    segmentador = interpretador.Segmentador(MODELO_TFLITE_PATH, n_threads=1)
+    segmentador = interpretador.Segmentador(MODELO_TFLITE_PATH)
 
     # Controlador
     posicoes_esquerda = [
-            (-10, -15),
-            (-20, -12),
-            (-30, -10)
+            (-5, -15),
+            (-10, -12),
+            (-15, -10),
+            (-17, -3)
             ]
 
-    ctrl = controlador.Controlador((60, 60), posicoes_esquerda, 4)
+    ctrl = controlador.Controlador((60, 60), posicoes_esquerda, 4, DISTANCIA_MINIMA)
 
     Kp, Ki, Kd = 0.6, 1, 0.003
     ctrl.parametros_PID_linear(Kp, Ki, Kd)
@@ -73,7 +78,7 @@ if __name__ == "__main__":
         if interface.modo_automatico:
             interface.atualiza_frame_automaticamente = False
 
-            auto.processa_imagem(RGB, debug=True)
+            auto.processa_imagem(RGB, debug=DEBUG)
 
         else:
             interface.atualiza_frame_automaticamente = True
@@ -104,6 +109,6 @@ if __name__ == "__main__":
     interface.define_video_callback_lista([video_callback])
     interface.show()
 
-    auto = autonomo.Auto(interface, enviador_comandos, segmentador, ctrl, "identificacao/cascade.xml")
+    auto = autonomo.Auto(interface, enviador_comandos, segmentador, ctrl, PATH_HAAR)
 
     sys.exit(app.exec())

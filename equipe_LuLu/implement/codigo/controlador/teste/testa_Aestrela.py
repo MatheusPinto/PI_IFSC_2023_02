@@ -8,6 +8,12 @@ Utiliza a imagem definida pelo parâmetro *IMAGEM_PATH* como um mapa para o algo
 Mostra esse mapa, sua versão expandida, o mapa de custo computado, as regiões checadas pelo A-estrela,
 o caminho percorrido pelo algorítimo, além do resultado final (mapa original mais caminho gerado). Todos
 esses mapas são concatenados e mostrados em uma única imagem.
+
+O resultado esperado está abaixo:
+
+.. image:: /../../../../codigo/controlador/img/teste-Aestrela.png
+
+Fonte: autoria própria.
 """
 
 
@@ -52,6 +58,7 @@ if __name__ == "__main__":
     tracador_caminho = aestrela.AEstrela()
     tracador_caminho.define_mapas(mapa_expandido, custo*5.0)
     mapa_caminho = tracador_caminho.gera_caminho_mapa_smoothing(pos_inicial, POS_FINAL)
+    angulo = tracador_caminho.retorna_direcao_inicial(pos_inicial, POS_FINAL, rad=False)
 
     # Se não consegue traçar um caminho
     if mapa_caminho is None:

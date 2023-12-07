@@ -3,6 +3,8 @@
 
 """Script de teste da interface com segmentador.
 
+Executa o segmentador de imagens e mostra os resultados na interface.
+
 Deve ser executado junto ao script 'server.py', que envia os frames capturados pela câmera e
 mostra os dados enviados pela interface.
 """
