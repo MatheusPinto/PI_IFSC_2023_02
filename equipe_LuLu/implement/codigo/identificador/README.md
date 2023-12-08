@@ -66,7 +66,7 @@ Ao longo do processo de treinamento foi obtido diversos arquivos de com vários 
 Fonte: Autoria Própria
 
 
-## Resultados Final
+## Resultados Final (Garrafa de Água)
 
 Ao final de treinamento mais qualificado, já com o arquivo cascade.xml em mãos, agora parte-se para os testes para determinar uma melhor configuração para determinada aplicação, portanto dependerá do que for necessário pode ser encontrado no site oficial do haar cascade, configurações de visualizações melhores ou piores para o tipo de treinamento feito.
 
@@ -82,10 +82,25 @@ Após diversos testes para encontrar a melhor configuração, era muito receoso 
 
 Portanto, baixar a resolução no caso deste projeto, foi uma das soluções para melhorar problemas de identificação e erros. Foi feito um video, mostrando o modelo identificando o lixo com a resolução baixa.
 
-**Video - Resultado**
+**Video - Resultado (Garrafa de Água)**
 
 [Video - Modelo de Identificação usando Haar-Cascade](https://youtu.be/ExhZpDbkwm0)
 
 
 Fonte: Autoria Própria
+
+## Correção dos Resultados Final (Garrafa de Leite)
+
+Após implementar o modelo de indeificação no wall-e foram obtidos resultados péssimmos, nos quais foi decidido mudar o objeto de identificação como lixo, por conta de reflexo e uma gama de erros que era obtido com o modelo treinado antigo.
+
+Por conta de tais fatores, foi utilizado outro objeto no caso uma garrafa de leite, igual a imagem a seguir.
+
+![N|Walle](img/caixa_de_leite.png)
+
+Fonte: Autoria Própria
+
+Agora, não havendo problemas com transparencia e nem reflexo, pode ser feito um treinamento maior, mais qualificado e que foi possivel obter um resultado incrível.
+
+Após horas de validação de imagem e 14 horas de treinamento, foi possível implementar o novo modelo de identificação de objeto no wall-e e após isto o wall-e estava identificando o lixo escolhido e treinado.
+
 
