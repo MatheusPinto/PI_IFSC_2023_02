@@ -1,0 +1,16 @@
+# Arquivos que não devem ir para o Wall-e
+client.key
+client_ecdsa_key
+fake_RPi
+
+# Padrões que devem ser ignorados
+__pycache__/
+*.md
+*.example
+
+# Arquivos de mídia
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
