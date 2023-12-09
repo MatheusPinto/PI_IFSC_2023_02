@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "PI")(type "KiCad")(uri "/home/joao/Development/Faculdade/nivea/pi2/design/hardware/sensor/lib/footprint")(options "")(descr ""))
+)
