@@ -169,7 +169,7 @@ class Auto():
 
         # Apresentação na interface
         if debug:
-            img_debug = cv.cvtColor(img_debug, cv.COLOR_BGR2RGB)
+            img_debug = cv.cvtColor(self._ctrl.retorna_imagem_debug(), cv.COLOR_BGR2RGB)
             self._interface.atualiza_frame(img_debug)
 
         else:

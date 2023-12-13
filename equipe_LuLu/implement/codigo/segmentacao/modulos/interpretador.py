@@ -79,6 +79,14 @@ class Segmentador():
         formato = formato[1:]  # Remove o primeiro eixo (ele é sempre 1 para esse modelo)
         self._formato_entrada = tuple(formato)
 
+        # Formato de saida
+        formato = self._saida_info[0]["shape"]
+        formato = formato[1:]  # Remove o primeiro eixo (ele é sempre 1 para esse modelo)
+        self._formato_saida = tuple(formato)
+
+        # Camada vazia (para completar os canais RGB)
+        self._vazio = np.zeros(self._formato_saida[0:2] + (1,), dtype=np.float32)
+
         # Índice do tensor de entrada e de saída
         self._tensor_entrada_indice = self._entrada_info[0]['index']
         self._tensor_saida_indice = self._saida_info[0]['index']
@@ -306,13 +314,19 @@ class Segmentador():
         self._interpretador.invoke()
         saida = self._interpretador.get_tensor(self._tensor_saida_indice)
 
-        # Salva a versão sem arredondamento da imagem
-        self._resultado_segmentacao_sem_arredondamento = saida[0]
-
         # A máscara é retornada no formato (1, linhas, colunas, canais).
         # Como há apenas uma imagem, é necessário selecionar o primeiro elemento.
-        self._resultado_segmentacao = tf_round(saida[0])
+        saida = saida[0]
         
+        # Cria o canal faltando para ser um RGB
+        if self._formato_saida[2] < 3:
+            saida = np.concatenate([saida, self._vazio], axis=2)
+
+        # Salva a versão sem arredondamento da imagem
+        self._resultado_segmentacao_sem_arredondamento = saida
+
+        # Salva a versão com arredondamento da imagem
+        self._resultado_segmentacao = tf_round(saida)
 
         return self._resultado_segmentacao
 

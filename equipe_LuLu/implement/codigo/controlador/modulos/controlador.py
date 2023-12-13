@@ -292,6 +292,12 @@ class Controlador():
         # Atualiza o mapa
         self.define_mapa(mapa)
 
+        # Remove a região do objeto do mapa
+        if pos_objeto is not None:
+            cx, xy = self._pos_original2mapa(pos_objeto[:2])
+            altura, largura = self._pos_original2mapa(pos_objeto[2:])
+            self._remove_regiao_objeto((cx, xy, altura, largura))
+
         # Converte a posição para a do mapa
         if pos_objeto is not None:
             pos = self._pos_original2mapa(pos_objeto[:2])
@@ -515,6 +521,7 @@ class Controlador():
         # Checagem de colisões
         self._colisoes = None
         self._debug_colisoes_adicionado = False
+        self._regiao_removida = False
 
         # Checagem de direção
         self._linear = None
@@ -848,6 +855,46 @@ class Controlador():
         self._angular = angular
 
         return linear, angular
+
+    def _remove_regiao_objeto(self, pos_objeto):
+        """Remove a região colidível ao redor do objeto do mapa.
+
+        A posiçao do objeto deve ser uma tupla do tipo (centro_y, centro_x, altura, largura).
+        Todas referentes a posição no mapa.
+
+        Parametros
+        ----------
+        pos_objeto : tuple
+            Posição do objeto no mapa.
+        """
+        # Não remove a região se isso já foi feito
+        if self._regiao_removida:
+            return
+
+        cy, cx, h, w = pos_objeto
+        h, w = h + 2, w + 2  # Evitar erros caso o tamanho do objeto seja muito pequeno
+        y, x = cy - h // 2, cx - w // 2
+
+        # Correção no caso de y ser negativo
+        if y < 0:
+            h, y = h+y, 0
+
+        # Correção no caso da altura ser maior do que o máximo
+        maximo = self._mapa_expandido.shape[0]
+        if y+h > maximo:
+            h = maximo - y
+
+        # Correção no caso da largura ser maior do que o máximo
+        maximo = self._mapa_expandido.shape[1]
+        if x+w > maximo:
+            w = maximo - x
+
+        # Correção no caso de x ser negativo
+        if x < 0:
+            w, x = w+x, 0
+
+        # Remove a região
+        self._mapa_expandido[y:y+h, x:x+w] = np.zeros((h, w), dtype=np.uint8)
 
     def _calcula_direcao_objeto(self, pos_final):
         """Calcula a direção que deve percorrer para alcançar um objeto.
