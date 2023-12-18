@@ -79,6 +79,7 @@ Communication::Protocol Communication::readSerial(bool debug) {
     tshvalue[3] = '\0';
 
     if (debug) {
+      Serial.print("\n");
       Serial.print("Device Value: ");
       Serial.println(devicevalue);
       
