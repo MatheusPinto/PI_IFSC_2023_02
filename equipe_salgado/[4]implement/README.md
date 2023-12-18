@@ -1,12 +1,14 @@
 # ESTUFA HIDROPÔNICA VERTICAL INTELIGENTE
 # IMPLEMENT
-Para melhor entendimento do desenvolvimento dos componentes e sistemas presente na Estufa Hidropônica Vertical Inteligente, o projeto será divido em 3 grandes tópicos.
+Para melhor entendimento do desenvolvimento dos componentes e sistemas presente na Estufa Hidropônica Vertical Inteligente, o projeto será divido em 6 grandes tópicos.
 - Planta Mecânica
 - Planta Eletrônica
 - Lista de Materiais
 - Etapas de Funcionamento do Código
 - Protocolo de Comunicação
 - Aplicativo
+
+Video de Testes da estufa https://www.youtube.com/watch?v=nC_NTJvr43A&ab_channel=MateusSalgado
 
 ## PLANTA MECÂNICA
 Podemos observar na figura abaixo os componentes e disposição dos mesmos nos sistemas. Será abordado de forma individual cada grupo de componentes.
