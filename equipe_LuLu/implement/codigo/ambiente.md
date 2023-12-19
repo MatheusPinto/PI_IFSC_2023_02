@@ -21,7 +21,7 @@ make rsync
 
 O diretório [env.exemplo/](env.exemplo) possui um exemplo do arquivo [env/conf](env.exemplo/conf). Assim, basta renomear o diretório [env.exemplo/](env.exemplo/) para 'env/', atualizar o IP do novo arquivo 'env/conf' para o da Raspberry Pi e sincronizar com a Raspberry Pi por meio do comando já mencionado.
 
-**Observação:** O acesso a Raspberry Pi por meio de SSH e do Rsync necessitam do IP que o IP do Wall-e esteja pré-configurado no arquivo 'env/conf' para funcionar.
+**Observação:** O acesso a Raspberry Pi por meio de SSH e do Rsync necessitam que o IP do Wall-e esteja pré-configurado no arquivo 'env/conf' para funcionar.
 
 
 ## Atualizar as chaves usadas na comunicação com o Wall-e
