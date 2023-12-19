@@ -19,7 +19,7 @@ import tensorflow as tf
 
 if __name__ == "__main__":
     # Cria o modelo
-    m = modelo.modelo_unet((128, 128, 3), 3, 7)
+    m = modelo.modelo_unet((128, 128, 3), 2, 7)
 
     # Gera o sumário e gráfico do modelo
     m.summary(expand_nested=True)

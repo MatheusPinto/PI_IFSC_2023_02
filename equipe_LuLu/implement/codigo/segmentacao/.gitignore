@@ -1,7 +1,6 @@
 # Arquivos do modelo
 modelo-backbone
 modelo-segmentacao
-*.tflite
 
 # Imagens da estrutura do modelo
 plots

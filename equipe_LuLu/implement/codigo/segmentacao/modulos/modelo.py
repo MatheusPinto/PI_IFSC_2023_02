@@ -17,6 +17,57 @@ que a máscara de treinamento seja do tipo uint8.
 import tensorflow as tf
 
 
+ATIVACAO = "relu"
+
+
+def _bloco_treinamento(x : tf.Tensor):
+    """Aplica um bloco ajuste ao treinamento ao fluxo atual.
+
+    Aplica Dropout no tensor com o fluxo atual do modelo, parâmetro *x*.
+    Isso melhora o treinamento, evitando overfitting.
+
+    O fluxo final (após passar pelo bloco) será retornado pela função.
+
+    Parameters
+    ----------
+    x : tf.Tensor
+        Tensor com o fluxo atual do modelo.
+
+    Returns
+    -------
+    tf.Tensor
+        Tensor com fluxo atual do modelo (após passar pelo bloco).
+    """
+    x = tf.keras.layers.Dropout(0.3)(x)
+
+    return x
+
+def _bloco_conv2D(x : tf.Tensor, n_filtros : int):
+    """Aplica um bloco de convoluções ao modelo.
+
+    Cria a camada a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
+    O fluxo final (após passar pelo bloco) será retornado pela função.
+
+    O número de filtros usados nas convoluções é determinado por *n_filtros*.
+
+    Parameters
+    ----------
+    x : tf.Tensor
+        Tensor com o fluxo atual do modelo.
+
+    n_filtros : int
+        O número de filtros usados nas convoluções do bloco padrão.
+
+    Returns
+    -------
+    tf.Tensor
+        Tensor com fluxo atual do modelo (após passar pelo bloco).
+    """
+    x = tf.keras.layers.Conv2D(n_filtros, 3, padding="same", activation=ATIVACAO, kernel_initializer="he_normal")(x)
+    x = _bloco_treinamento(x)
+
+    return x
+
 def _bloco_padrao(x : tf.Tensor, n_filtros : int):
     """Aplica um bloco padrão de convoluções ao modelo.
 
@@ -40,37 +91,7 @@ def _bloco_padrao(x : tf.Tensor, n_filtros : int):
     tf.Tensor
         Tensor com fluxo atual do modelo (após passar pelo bloco).
     """
-    x = tf.keras.layers.Conv2D(n_filtros, 3, padding="same", activation="relu", kernel_initializer="he_normal")(x)
-    x = tf.keras.layers.Conv2D(n_filtros, 3, padding="same", activation="relu", kernel_initializer="he_normal")(x)
-
-    return x
-
-def _bloco_entrada(x : tf.Tensor, n_filtros : int):
-    """Bloco de entrada do modelo. Aplicado sobre a imagem inicial.
-
-    Cria a camada a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
-    O fluxo final (após passar pelo bloco) será retornado pela função.
-
-    O número de filtros usados nas convoluções é determinado por *n_filtros*.
-
-    Parameters
-    ----------
-    x : tf.Tensor
-        Tensor com o fluxo atual do modelo.
-
-    n_filtros : int
-        O número de filtros usados nas convoluções do bloco padrão.
-
-    Returns
-    -------
-    tf.Tensor
-        Tensor com o fluxo atual do modelo (após passar pelo bloco).
-    """
-    x = tf.keras.layers.DepthwiseConv2D(
-            3, padding="same", depth_multiplier=3, activation="relu", kernel_initializer="he_normal"
-            )(x)
-
-    x = tf.keras.layers.Conv2D(n_filtros, 3, padding="same", activation="relu", kernel_initializer="he_normal")(x)
+    x = _bloco_conv2D(x, n_filtros)
 
     return x
 
@@ -95,11 +116,10 @@ def _bloco_downsample(x : tf.Tensor, n_filtros : int):
     tf.Tensor
         Tensor com fluxo atual do modelo (após passar pelo bloco).
     """
-    x = _bloco_padrao(x, n_filtros)
-
     # Downsample por meio de MaxPool2D
     x = tf.keras.layers.MaxPool2D(2)(x)
-    x = tf.keras.layers.Dropout(0.3)(x)
+
+    x = _bloco_padrao(x, n_filtros)
 
     return x
 
@@ -135,11 +155,11 @@ def _codificador(x : tf.Tensor, n_filtros : int, n_downsample : int):
     saidas_codificador = []
 
     for n in range(n_downsample):
-        saidas_codificador.append(x)
         x = _bloco_downsample(x, n_filtros)
-        n_filtros *= 2  # O número de filtros aumenta conforme prossegue o downsample
+        saidas_codificador.append(x)
+        n_filtros = n_filtros*2  # O número de filtros aumenta conforme prossegue o downsample
 
-    return x, saidas_codificador
+    return saidas_codificador[-1], saidas_codificador[:-1]
 
 def _bloco_upsample(x : tf.Tensor, n_filtros : int, saida_codificador : tf.Tensor):
     """Bloco que aumenta as dimensões (n_linhas, n_colunas) dos dados, para formar as máscaras.
@@ -162,17 +182,17 @@ def _bloco_upsample(x : tf.Tensor, n_filtros : int, saida_codificador : tf.Tenso
         Saida do codificador que será concatenada como fluxo atual do modelo.
     """
     # Upsample por meio de convolução transposta
-    x = tf.keras.layers.Conv2DTranspose(n_filtros, 3, 2, padding="same")(x)
+    x = tf.keras.layers.Conv2DTranspose(n_filtros, 3, 2, padding="same", activation=ATIVACAO)(x)
+    x = _bloco_treinamento(x)
 
     # Combinar com a saída do codificador
     x = tf.keras.layers.concatenate([x, saida_codificador])
-    x = tf.keras.layers.Dropout(0.3)(x)
 
     x = _bloco_padrao(x, n_filtros)
 
     return x
 
-def _decodificador(x, n_filtros, saidas_codificador):
+def _decodificador(x : tf.Tensor, n_filtros, saidas_codificador):
     """Cria o decodificador do modelo (camadas de upsample).
 
     Cria o decodificador a partir do tensor com o fluxo atual do modelo, parâmetro *x*, e das saídas do codificador.
@@ -197,9 +217,41 @@ def _decodificador(x, n_filtros, saidas_codificador):
     """
     for saida_codificador in reversed(saidas_codificador):
         x = _bloco_upsample(x, n_filtros, saida_codificador)
-        n_filtros /= 2  # O número de filtros será reduzido conforme prossegue o upsample
+        n_filtros = n_filtros//2  # O número de filtros será reduzido conforme prossegue o upsample
 
     return x
+
+def _bloco_saida(x : tf.Tensor, mascaras : int):
+    """Cria a camada de saída do modelo.
+
+    Cria a camada de saída do modelo a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
+    A saída do modelo (com as máscaras) será retornada por essa função.
+
+    O número de máscaras é dado por *mascaras*.
+
+    Parameters
+    ----------
+    x : tf.Tensor
+        Tensor com o fluxo atual do modelo.
+
+    mascaras : int
+        O número de máscaras da saída do modelo.
+
+    Returns
+    -------
+    tf.Tensor
+        Tensor com fluxo atual do modelo e máscaras.
+    """
+    # Último upsample
+    x = tf.keras.layers.Conv2DTranspose(4, 3, 2, padding="same", activation=ATIVACAO)(x)
+    x = _bloco_treinamento(x)
+
+    # Define o número de canais de saída
+    x = tf.keras.layers.Conv2D(mascaras, 1, padding="same", activation = "softmax")(x)
+    x = _bloco_treinamento(x)
+
+    return x
+
 
 def modelo_unet(formato_entrada, canais_saida=3, n_downsample=4):
     """Cria o modelo uNET.
@@ -232,20 +284,13 @@ def modelo_unet(formato_entrada, canais_saida=3, n_downsample=4):
     entrada = tf.keras.layers.Input(shape=formato_entrada)
     x = entrada
 
-    # Bloco de entrada
-    x = _bloco_entrada(x, 3)
-
     # Codificador
-    x, saidas_codificador = _codificador(x, 8, n_downsample)
-
-    # Bloco entre o codificador e decodificador
-    x = _bloco_padrao(x, 512)
+    x, saidas_codificador = _codificador(x, 4, n_downsample)
 
     # Decodificador
-    x = _decodificador(x, 512, saidas_codificador)
+    x = _decodificador(x, 128, saidas_codificador)
 
-    #  Saída do modelo
-    x = _bloco_padrao(x, 32)
-    x = tf.keras.layers.Conv2D(canais_saida, 1, padding="same", activation = "softmax")(x)
+    #  Bloco antes da saída do modelo
+    x = _bloco_saida(x, canais_saida)
 
     return tf.keras.Model(inputs=entrada, outputs=x, name="modelo-completo")

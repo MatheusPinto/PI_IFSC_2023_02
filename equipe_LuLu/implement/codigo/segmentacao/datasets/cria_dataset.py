@@ -17,6 +17,18 @@ haver mais de uma pasta com imagens e suas máscaras entro desse diretório.
 
 Outro parâmetro importante é o formato das imagens, definido por 'FORMATO_IMAGENS'. O tamanho das imagens
 é uma tupla do tipo (n_linhas, n_colunas), em pixels. Ele será usado no melhoramento do dataset.
+
+O dataset formado é melhorado com as seguintes operações:
+
+- Espelhamento horizontal
+- Espelhamento vertical
+- Rotação
+- Ajuste de brilho
+- Ajuste de contraste
+- Ajuste de escala
+
+Elas são habilitadas pelos parâmetros 'ESPELHA_HORIZONTAL', 'ESPELHA_VERTICAL', 'ROTACAO', 'BRILHO',
+'CONTRASTE', 'ESCALA'. Por exemplo, se 'ESPELHA_HORIZONTAL' for True, a imagem será espelhada horizontalmente.
 """
 
 
@@ -30,19 +42,31 @@ import os
 DATASETS_PATH = "imagens-dataset"
 TREINO_PATH = "treino"
 VALIDACAO_PATH = "validacao"
-FORMATO_IMAGENS = (128, 128)  # (n_colunas, n_linhas)
-TAMANHO_BATCH = 16
+FORMATO_IMAGENS = (128, 128)  # (n_linhas, n_colunas)
+TAMANHO_BATCH = 64
+
+ESPELHA_VERTICAL = False
+ESPELHA_HORIZONTAL = True
+ROTACAO = False
+BRILHO = True
+CONTRASTE = True
+ESCALA = True
 
 
 def melhora_dataset(imagem : tf.Tensor, mascara : tf.Tensor):
     """Melhora os elementos do dataset.
 
     O melhoramento do dataset consiste em:
+
     - Espelhamento horizontal
     - Espelhamento vertical
     - Rotação
     - Brilho
     - Contraste
+    - Escala
+
+    Esses fatores são definidos pelas constantes do script: 'ESPELHA_VERTICAL', 'ESPELHA_HORIZONTAL',
+    'ROTACAO', 'BRILHO', 'CONTRASTE' e 'ESCALA'.
 
     Todos esses fatores são ajustados na imagem original para diversificar o dataset. A máscara
     será ajustada para corresponder com a imagem original ajustada.
@@ -67,40 +91,41 @@ def melhora_dataset(imagem : tf.Tensor, mascara : tf.Tensor):
     mascara = tf.image.resize(mascara, FORMATO_IMAGENS)
 
     # Espelhamento na horizontal
-    if tf.random.uniform(()) > 0.5:
+    if ESPELHA_HORIZONTAL and tf.random.uniform(()) > 0.5:
         imagem = tf.image.flip_left_right(imagem)
         mascara = tf.image.flip_left_right(mascara)
 
     # Espelhamento na vertical
-    if tf.random.uniform(()) > 0.5:
+    if ESPELHA_VERTICAL and tf.random.uniform(()) > 0.5:
         imagem = tf.image.flip_up_down(imagem)
         mascara = tf.image.flip_up_down(mascara)
 
     # Rotação
-    sentido_rotacao = tf.random.uniform((), minval=0, maxval=4, dtype=tf.int32)
-    while sentido_rotacao > 0:
-        sentido_rotacao -= 1
-        imagem = tf.image.rot90(imagem)
-        mascara = tf.image.rot90(mascara)
+    if ROTACAO:
+        sentido_rotacao = tf.random.uniform((), minval=0, maxval=4, dtype=tf.int32)
+        while sentido_rotacao > 0:
+            sentido_rotacao -= 1
+            imagem = tf.image.rot90(imagem)
+            mascara = tf.image.rot90(mascara)
 
     # Brilho
-    if tf.random.uniform(()) < 0.5:
+    if BRILHO and tf.random.uniform(()) < 0.5:
         imagem = tf.image.random_brightness(imagem, max_delta=0.8)
 
     # Contraste
-    if tf.random.uniform(()) < 0.5:
+    if CONTRASTE and tf.random.uniform(()) < 0.5:
         imagem = tf.image.random_contrast(imagem, lower=0.6, upper=0.8)
 
     # Ajuste de escala (operação de crop)
-    if tf.random.uniform(()) < 0.25:
+    if ESCALA and tf.random.uniform(()) < 0.25:
         # Escolhe aleatoriamente as coordenadas de início para o crop
-        crop_formato = (90, 90)
-        start_x = tf.random.uniform(shape=[], maxval=imagem.shape[1] - crop_formato[0], dtype=tf.int32)
-        start_y = tf.random.uniform(shape=[], maxval=imagem.shape[2] - crop_formato[1], dtype=tf.int32)
+        crop_formato = (FORMATO_IMAGENS[0] // 2, FORMATO_IMAGENS[1] // 2)
+        start_x = tf.random.uniform(shape=[], maxval=imagem.shape[2] - crop_formato[1], dtype=tf.int32)
+        start_y = tf.random.uniform(shape=[], maxval=imagem.shape[1] - crop_formato[0], dtype=tf.int32)
 
         # Realiza operação de crop na imagem e máscara
-        imagem = tf.image.crop_to_bounding_box(imagem, start_x, start_y, crop_formato[0], crop_formato[1])
-        mascara = tf.image.crop_to_bounding_box(mascara, start_x, start_y, crop_formato[0], crop_formato[1])
+        imagem = tf.image.crop_to_bounding_box(imagem, start_y, start_x, crop_formato[0], crop_formato[1])
+        mascara = tf.image.crop_to_bounding_box(mascara, start_y, start_x, crop_formato[0], crop_formato[1])
 
         # Redimensiona para o formato original
         imagem = tf.image.resize(imagem, FORMATO_IMAGENS)
@@ -164,7 +189,7 @@ if __name__ == "__main__":
         dataset = dataset.concatenate(novo_datatset)
 
     # Cria o dataset de validação
-    dataset_validacao = dataset.shuffle(10000).take(200)
+    dataset_validacao = dataset.shuffle(20000).take(200)
 
     try:
         shutil.rmtree(VALIDACAO_PATH)  # Remove o dataset antigo
