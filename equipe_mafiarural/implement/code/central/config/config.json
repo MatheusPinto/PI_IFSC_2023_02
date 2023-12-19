@@ -1,0 +1,51 @@
+{
+	"wifi": {
+		"ssid": "some_ssid",
+		"password": "some_password",
+		"hostname": "some-hostname"
+	},
+	"mqtt": {
+		"host": "test.mosquitto.org",
+		"port": 1883,
+		"uniqueId": "abea99585f8a48f9",
+		"topics": {
+			"relay": {
+				"1": {
+					"in": "relay/73f84c51/in",
+					"out": "relay/73f84c51/out"
+				},
+				"2": {
+					"in": "relay/a7af0637/in",
+					"out": "relay/a7af0637/out"
+				},
+				"3": {
+					"in": "relay/0b766ff0/in",
+					"out": "relay/0b766ff0/out"
+				},
+				"4": {
+					"in": "relay/153fb673/in",
+					"out": "relay/153fb673/out"
+				},
+				"5": {
+					"in": "relay/9151494d/in",
+					"out": "relay/9151494d/out"
+				},
+				"6": {
+					"in": "relay/8cf58bc7/in",
+					"out": "relay/8cf58bc7/out"
+				},
+				"7": {
+					"in": "relay/22551182/in",
+					"out": "relay/22551182/out"
+				}
+			},
+			"validator": {
+				"in": "validator/bf7879d9/in",
+				"out": "validator/bf7879d9/out"
+			}
+		}
+	},
+	"startup": {
+		"relay": 2
+	}
+}

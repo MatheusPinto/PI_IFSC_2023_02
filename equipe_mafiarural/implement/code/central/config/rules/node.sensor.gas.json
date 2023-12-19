@@ -1,0 +1,21 @@
+{
+	"id": "node.sensor.gas",
+	"name": "Gas Sensor Triggered",
+	"condition": {
+		"mq5": {
+			"value": 50,
+			"comparator": ">",
+			"action": 4
+		},
+		"mq6": {
+			"value": 50,
+			"comparator": ">",
+			"action": 28
+		},
+		"mq7": {
+			"value": 50,
+			"comparator": ">",
+			"action": 16
+		}
+	}
+}
