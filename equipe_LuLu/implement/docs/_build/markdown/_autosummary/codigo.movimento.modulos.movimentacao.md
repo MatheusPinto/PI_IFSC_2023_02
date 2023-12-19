@@ -14,7 +14,7 @@ Basta fornecer a velocidade linear e angular.
 
 <a id="codigo.movimento.modulos.movimentacao.Movimento"></a>
 
-### *class* codigo.movimento.modulos.movimentacao.Movimento(pinos_driver_DC: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pinos_motor_passo: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pino_buzzer: [int](https://docs.python.org/3/library/functions.html#int), modo_GPIO: [str](https://docs.python.org/3/library/stdtypes.html#str) = 'BCM')
+### *class* codigo.movimento.modulos.movimentacao.Movimento(pinos_driver_DC: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pinos_servos: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pino_buzzer: [int](https://docs.python.org/3/library/functions.html#int), modo_GPIO: [str](https://docs.python.org/3/library/stdtypes.html#str) = 'BCM')
 
 Base: [`object`](https://docs.python.org/3/library/functions.html#object)
 
@@ -23,7 +23,7 @@ Controlador do movimento do Wall-e.
 Controla e gerencia os motores que movimentam o Wall-e:
 
 * 2 motores DC, por meio de uma ponte H.
-* 3 motores de passo.
+* 3 servo motores.
 
 Além disso, controla um buzzer ativo em nível lógico baixo, usado para sinalização de lixo.
 
@@ -34,19 +34,19 @@ se o Wall-e está sinalizando o lixo, use o método [`esta_sinalizando_lixo()`](
 
 <a id="codigo.movimento.modulos.movimentacao.Movimento.__init__"></a>
 
-#### \_\_init_\_(pinos_driver_DC: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pinos_motor_passo: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pino_buzzer: [int](https://docs.python.org/3/library/functions.html#int), modo_GPIO: [str](https://docs.python.org/3/library/stdtypes.html#str) = 'BCM')
+#### \_\_init_\_(pinos_driver_DC: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pinos_servos: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple), pino_buzzer: [int](https://docs.python.org/3/library/functions.html#int), modo_GPIO: [str](https://docs.python.org/3/library/stdtypes.html#str) = 'BCM')
 
 Configura os motores usados na movimentação do Wall-e, e o buzzer.
 
-Configura os motores DC (ponte H) e os motores de passo usados. Deve ser fornecido um vetor com os
-pinos GPIO do motor DC, e outro com os pinos GPIO dos motores de passo. Além disso, é necessário
+Configura os motores DC (ponte H) e os servo motores usados. Deve ser fornecido um vetor com os
+pinos GPIO do motor DC, e outro com os pinos GPIO dos servo motores. Além disso, é necessário
 informardo pino GPIO do buzzer para configurar o buzzer.
 
 * **Parâmetros:**
   * **pinos_driver_DC** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Os pinos GPIO do motor DC. Deve estar no formato (IN1, IN2, IN3, IN4). Observe o método
     [`__init__()`](codigo.movimento.modulos.motores.md#codigo.movimento.modulos.motores.DC.__init__) da classe [`DC`](codigo.movimento.modulos.motores.md#codigo.movimento.modulos.motores.DC)
     para mais informações.
-  * **pinos_motor_passo** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Os pinos GPIO dos servo motores. Cada elemento corresponde a um pino usado para controlar um
+  * **pinos_servos** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Os pinos GPIO dos servo motores. Cada elemento corresponde a um pino usado para controlar um
     servo motor. Deve estar no formato (pino1, pino2, pino3). Em que, pino1 e pino2 são os usados
     para controlar os braços direito e esquerdo, respectivamente; e pino3 é usado para controlar o pescoço.
   * **pino_buzzer** ([*int*](https://docs.python.org/3/library/functions.html#int)) – O pino GPIO do buzzer.

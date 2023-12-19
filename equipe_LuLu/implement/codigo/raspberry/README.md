@@ -278,6 +278,7 @@ Descobrir qual driver deveria ser usado nesse adaptador wifi foi complexo porque
 
 Após o driver estar configurado, basta reiniciar a Raspberry Pi e conectar com o wifi. A conexão foi feita usando a interface gráfica.
 
+
 ### Conexão Wifi
 
 A Raspberry Pi foi registrada na rede com nome de "WalleWifi123" e senha "Nov162302".

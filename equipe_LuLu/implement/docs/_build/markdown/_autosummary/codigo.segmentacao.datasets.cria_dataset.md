@@ -24,6 +24,18 @@ haver mais de uma pasta com imagens e suas máscaras entro desse diretório.
 Outro parâmetro importante é o formato das imagens, definido por ‘FORMATO_IMAGENS’. O tamanho das imagens
 é uma tupla do tipo (n_linhas, n_colunas), em pixels. Ele será usado no melhoramento do dataset.
 
+O dataset formado é melhorado com as seguintes operações:
+
+- Espelhamento horizontal
+- Espelhamento vertical
+- Rotação
+- Ajuste de brilho
+- Ajuste de contraste
+- Ajuste de escala
+
+Elas são habilitadas pelos parâmetros ‘ESPELHA_HORIZONTAL’, ‘ESPELHA_VERTICAL’, ‘ROTACAO’, ‘BRILHO’,
+‘CONTRASTE’, ‘ESCALA’. Por exemplo, se ‘ESPELHA_HORIZONTAL’ for True, a imagem será espelhada horizontalmente.
+
 <a id="codigo.segmentacao.datasets.cria_dataset.cria_datatset_pasta"></a>
 
 ### codigo.segmentacao.datasets.cria_dataset.cria_datatset_pasta(path: [str](https://docs.python.org/3/library/stdtypes.html#str))
@@ -46,11 +58,16 @@ imagem original com sua respectiva máscara.
 Melhora os elementos do dataset.
 
 O melhoramento do dataset consiste em:
+
 - Espelhamento horizontal
 - Espelhamento vertical
 - Rotação
 - Brilho
 - Contraste
+- Escala
+
+Esses fatores são definidos pelas constantes do script: ‘ESPELHA_VERTICAL’, ‘ESPELHA_HORIZONTAL’,
+‘ROTACAO’, ‘BRILHO’, ‘CONTRASTE’ e ‘ESCALA’.
 
 Todos esses fatores são ajustados na imagem original para diversificar o dataset. A máscara
 será ajustada para corresponder com a imagem original ajustada.

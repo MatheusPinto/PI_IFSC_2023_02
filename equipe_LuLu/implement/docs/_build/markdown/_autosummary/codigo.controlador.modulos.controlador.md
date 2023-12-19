@@ -295,6 +295,18 @@ Esse método também pode ser usado para iniciar os atributos referentes a uma i
 
 Uma iteração corresponde a uma nova checagem de colisão, de direção, de sinalização em um novo mapa fornecido.
 
+<a id="codigo.controlador.modulos.controlador.Controlador._remove_regiao_objeto"></a>
+
+#### \_remove_regiao_objeto(pos_objeto)
+
+Remove a região colidível ao redor do objeto do mapa.
+
+A posiçao do objeto deve ser uma tupla do tipo (centro_y, centro_x, altura, largura).
+Todas referentes a posição no mapa.
+
+* **Parâmetros:**
+  **pos_objeto** ([*tuple*](https://docs.python.org/3/library/stdtypes.html#tuple)) – Posição do objeto no mapa.
+
 <a id="codigo.controlador.modulos.controlador.Controlador.calcula_direcao"></a>
 
 #### calcula_direcao(mapa: [ndarray](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray), pos_objeto: [tuple](https://docs.python.org/3/library/stdtypes.html#tuple) | [None](https://docs.python.org/3/library/constants.html#None) = None, debug=False)

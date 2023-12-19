@@ -8,7 +8,7 @@ Os módulos criados para implementar esse projeto estão no diretório ['modulos
 
 Os scripts de teste estão no diretório ['teste/'](teste/). A documentação deles está disponível em [documentação dos scripts de teste](../../docs/_build/markdown/_autosummary/codigo.movimento.teste.md).
 
-Também há alguns scripts de teste usados durante a etapa de validação do funcionamento dos motores DC e de passo. Eles estão no diretório [teste_validacao](teste_validacao). A documentação deles está disponível em [documentação dos scripts de teste da validação](../../docs/_build/markdown/_autosummary/codigo.movimento.teste_validacao.md).
+Também há alguns scripts de teste usados durante a etapa de validação do funcionamento dos motores DC e servos SG90. Eles estão no diretório [teste_validacao](teste_validacao). A documentação deles está disponível em [documentação dos scripts de teste da validação](../../docs/_build/markdown/_autosummary/codigo.movimento.teste_validacao.md).
 
 
 

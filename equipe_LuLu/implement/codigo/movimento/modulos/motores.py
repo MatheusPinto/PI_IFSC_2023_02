@@ -6,7 +6,7 @@
 Implementa duas classes:
 
 * :class:`DC`: controla os motores DC por meio de uma ponte H L298N.
-* :class:`Passo`: controla os servo motores.
+* :class:`Servo`: controla os servo motores.
 """
 
 
@@ -155,7 +155,7 @@ class DC():
         self._pwm_IN4.stop()
 
 
-class Passo():
+class Servo():
     """Classe de controle de um servo motor SG90.
 
     Ao inicializar, deve ser fornecido o pino GPIO usado para controlar o motor.

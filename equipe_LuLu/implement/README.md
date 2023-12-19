@@ -20,4 +20,7 @@ A documentação dos testes e validação do circuito inicial está disponível 
 
 Os arquivos da PCI estão disponíveis na pasta de [documentos da PCI](documentos_pci).
 
-O Wall-e está andando por conta própria, como mostrado no [vídeo dele andando por conta própria](https://www.youtube.com/watch?v=aoS4w5tfg_o). Faltando apenas finalizar o modo autônomo.
+
+# Resultados
+
+O Wall-e está andando por conta própria e identificando lixo (caixa de leite), como mostrado no [vídeo de teste de colisão e identificação do lixo](https://www.youtube.com/watch?v=cx0_UOhC5lk). Mais informações sobre os resultados estão disponíveis na página de [resultados](Resultados.md).

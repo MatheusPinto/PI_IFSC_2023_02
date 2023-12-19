@@ -862,7 +862,7 @@ class Controlador():
         A posiçao do objeto deve ser uma tupla do tipo (centro_y, centro_x, altura, largura).
         Todas referentes a posição no mapa.
 
-        Parametros
+        Parameters
         ----------
         pos_objeto : tuple
             Posição do objeto no mapa.

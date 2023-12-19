@@ -19,7 +19,7 @@ Para gerar a documentação, execute o script [cria_documentacao.sh](cria_docume
 pip3 install -U sphinx sphinx-markdown-builder
 ```
 
-Além disso, como o [Sphinx](https://www.sphinx-doc.org/en/master/) importa os arquivos para ter acesso a sua documentação, é necessário ter todos os módulos necessários para executar todos os códigos instalados. Eles estão listados na [documentação principal do código](../codigo/).
+Além disso, como o [Sphinx](https://www.sphinx-doc.org/en/master/) importa os arquivos para ter acesso a sua documentação, é necessário ter todos os módulos necessários para executar todos os códigos instalados. Eles estão listados na [documentação principal do código](../codigo/README.md#dependencias).
 
 **Observação:** O módulo [bpy](https://pypi.org/project/bpy/) não é necessário para executar nenhum código, visto que o [único script que depende dele](../codigo/segmentacao/datasets/CG/define_material.py) apenas é executado pelo [Blender](https://www.blender.org/). Todavia, ele é necessário para gerar a documentação. Instale-o com o seguinte comando:
 

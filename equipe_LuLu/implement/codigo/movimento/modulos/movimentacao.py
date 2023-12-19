@@ -8,7 +8,7 @@ Basta fornecer a velocidade linear e angular.
 """
 
 
-from .motores import DC, Passo, configura_GPIO
+from .motores import DC, Servo, configura_GPIO
 import RPi.GPIO as GPIO
 import time
 
@@ -19,7 +19,7 @@ class Movimento():
     Controla e gerencia os motores que movimentam o Wall-e:
 
     * 2 motores DC, por meio de uma ponte H.
-    * 3 motores de passo.
+    * 3 servo motores.
 
     Além disso, controla um buzzer ativo em nível lógico baixo, usado para sinalização de lixo.
 
@@ -29,11 +29,11 @@ class Movimento():
     se o Wall-e está sinalizando o lixo, use o método :meth:`esta_sinalizando_lixo()`.
     """
 
-    def __init__(self, pinos_driver_DC: tuple, pinos_motor_passo: tuple, pino_buzzer: int, modo_GPIO: str = "BCM"):
+    def __init__(self, pinos_driver_DC: tuple, pinos_servos: tuple, pino_buzzer: int, modo_GPIO: str = "BCM"):
         """Configura os motores usados na movimentação do Wall-e, e o buzzer.
 
-        Configura os motores DC (ponte H) e os motores de passo usados. Deve ser fornecido um vetor com os
-        pinos GPIO do motor DC, e outro com os pinos GPIO dos motores de passo. Além disso, é necessário
+        Configura os motores DC (ponte H) e os servo motores usados. Deve ser fornecido um vetor com os
+        pinos GPIO do motor DC, e outro com os pinos GPIO dos servo motores. Além disso, é necessário
         informardo pino GPIO do buzzer para configurar o buzzer.
 
         Parameters
@@ -43,7 +43,7 @@ class Movimento():
             :meth:`~codigo.movimento.modulos.motores.DC.__init__()` da classe :class:`~codigo.movimento.modulos.motores.DC`
             para mais informações.
 
-        pinos_motor_passo : tuple
+        pinos_servos : tuple
             Os pinos GPIO dos servo motores. Cada elemento corresponde a um pino usado para controlar um
             servo motor. Deve estar no formato (pino1, pino2, pino3). Em que, pino1 e pino2 são os usados
             para controlar os braços direito e esquerdo, respectivamente; e pino3 é usado para controlar o pescoço.
@@ -68,15 +68,15 @@ class Movimento():
         # DC
         self._DC = DC(pinos_driver_DC[0], pinos_driver_DC[1], pinos_driver_DC[2], pinos_driver_DC[3])
 
-        # Motores de passo
-        self._pino_passo1 = pinos_motor_passo[0]
-        self._pino_passo2 = pinos_motor_passo[1]
-        self._pino_passo3 = pinos_motor_passo[2]
+        # Servos
+        self._pino_servo1 = pinos_servos[0]
+        self._pino_servo2 = pinos_servos[1]
+        self._pino_servo3 = pinos_servos[2]
 
         passos = 10
-        self._passo1 = Passo(self._pino_passo1, passos)
-        self._passo2 = Passo(self._pino_passo2, passos)
-        self._passo3 = Passo(self._pino_passo3, passos)
+        self._servo1 = Servo(self._pino_servo1, passos)
+        self._servo2 = Servo(self._pino_servo2, passos)
+        self._servo3 = Servo(self._pino_servo3, passos)
 
     def define_velocidade(self, velocidade_linear: float, velocidade_angular: float):
         """Define a velocidade linear e angular de movimento do Wall-e.

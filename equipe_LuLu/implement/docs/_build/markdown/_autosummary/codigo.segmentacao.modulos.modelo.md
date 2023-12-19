@@ -18,6 +18,25 @@ Para criar o modelo de segmentação, use a função [`modelo_unet()`](#codigo.s
 não use apenas 1 canal de saída, use 2 pelo menos. Além disso, essa função de perda necessita
 que a máscara de treinamento seja do tipo uint8.
 
+<a id="codigo.segmentacao.modulos.modelo._bloco_conv2D"></a>
+
+### codigo.segmentacao.modulos.modelo.\_bloco_conv2D(x: Tensor, n_filtros: [int](https://docs.python.org/3/library/functions.html#int))
+
+Aplica um bloco de convoluções ao modelo.
+
+Cria a camada a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
+O fluxo final (após passar pelo bloco) será retornado pela função.
+
+O número de filtros usados nas convoluções é determinado por *n_filtros*.
+
+* **Parâmetros:**
+  * **x** (*tf.Tensor*) – Tensor com o fluxo atual do modelo.
+  * **n_filtros** ([*int*](https://docs.python.org/3/library/functions.html#int)) – O número de filtros usados nas convoluções do bloco padrão.
+* **Retorna:**
+  Tensor com fluxo atual do modelo (após passar pelo bloco).
+* **Tipo de retorno:**
+  tf.Tensor
+
 <a id="codigo.segmentacao.modulos.modelo._bloco_downsample"></a>
 
 ### codigo.segmentacao.modulos.modelo.\_bloco_downsample(x: Tensor, n_filtros: [int](https://docs.python.org/3/library/functions.html#int))
@@ -37,25 +56,6 @@ O número de filtros usados nas convoluções é determinado por *n_filtros*.
 * **Tipo de retorno:**
   tf.Tensor
 
-<a id="codigo.segmentacao.modulos.modelo._bloco_entrada"></a>
-
-### codigo.segmentacao.modulos.modelo.\_bloco_entrada(x: Tensor, n_filtros: [int](https://docs.python.org/3/library/functions.html#int))
-
-Bloco de entrada do modelo. Aplicado sobre a imagem inicial.
-
-Cria a camada a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
-O fluxo final (após passar pelo bloco) será retornado pela função.
-
-O número de filtros usados nas convoluções é determinado por *n_filtros*.
-
-* **Parâmetros:**
-  * **x** (*tf.Tensor*) – Tensor com o fluxo atual do modelo.
-  * **n_filtros** ([*int*](https://docs.python.org/3/library/functions.html#int)) – O número de filtros usados nas convoluções do bloco padrão.
-* **Retorna:**
-  Tensor com o fluxo atual do modelo (após passar pelo bloco).
-* **Tipo de retorno:**
-  tf.Tensor
-
 <a id="codigo.segmentacao.modulos.modelo._bloco_padrao"></a>
 
 ### codigo.segmentacao.modulos.modelo.\_bloco_padrao(x: Tensor, n_filtros: [int](https://docs.python.org/3/library/functions.html#int))
@@ -72,6 +72,43 @@ Esse bloco será colocado entre as operações de downsample e upsample.
 * **Parâmetros:**
   * **x** (*tf.Tensor*) – Tensor com o fluxo atual do modelo.
   * **n_filtros** ([*int*](https://docs.python.org/3/library/functions.html#int)) – O número de filtros usados nas convoluções do bloco padrão.
+* **Retorna:**
+  Tensor com fluxo atual do modelo (após passar pelo bloco).
+* **Tipo de retorno:**
+  tf.Tensor
+
+<a id="codigo.segmentacao.modulos.modelo._bloco_saida"></a>
+
+### codigo.segmentacao.modulos.modelo.\_bloco_saida(x: Tensor, mascaras: [int](https://docs.python.org/3/library/functions.html#int))
+
+Cria a camada de saída do modelo.
+
+Cria a camada de saída do modelo a partir do tensor com o fluxo atual do modelo, parâmetro *x*.
+A saída do modelo (com as máscaras) será retornada por essa função.
+
+O número de máscaras é dado por *mascaras*.
+
+* **Parâmetros:**
+  * **x** (*tf.Tensor*) – Tensor com o fluxo atual do modelo.
+  * **mascaras** ([*int*](https://docs.python.org/3/library/functions.html#int)) – O número de máscaras da saída do modelo.
+* **Retorna:**
+  Tensor com fluxo atual do modelo e máscaras.
+* **Tipo de retorno:**
+  tf.Tensor
+
+<a id="codigo.segmentacao.modulos.modelo._bloco_treinamento"></a>
+
+### codigo.segmentacao.modulos.modelo.\_bloco_treinamento(x: Tensor)
+
+Aplica um bloco ajuste ao treinamento ao fluxo atual.
+
+Aplica Dropout no tensor com o fluxo atual do modelo, parâmetro *x*.
+Isso melhora o treinamento, evitando overfitting.
+
+O fluxo final (após passar pelo bloco) será retornado pela função.
+
+* **Parâmetros:**
+  **x** (*tf.Tensor*) – Tensor com o fluxo atual do modelo.
 * **Retorna:**
   Tensor com fluxo atual do modelo (após passar pelo bloco).
 * **Tipo de retorno:**
@@ -117,7 +154,7 @@ O número de operações de downsample do codificador é definido por *n_downsam
 
 <a id="codigo.segmentacao.modulos.modelo._decodificador"></a>
 
-### codigo.segmentacao.modulos.modelo.\_decodificador(x, n_filtros, saidas_codificador)
+### codigo.segmentacao.modulos.modelo.\_decodificador(x: Tensor, n_filtros, saidas_codificador)
 
 Cria o decodificador do modelo (camadas de upsample).
 

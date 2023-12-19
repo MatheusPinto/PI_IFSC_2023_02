@@ -7,4 +7,4 @@
 
 <a id="module-codigo.movimento.teste_validacao.testa_sg90"></a>
 
-Testa o motor de passo SG90.
+Testa o servo motor SG90.

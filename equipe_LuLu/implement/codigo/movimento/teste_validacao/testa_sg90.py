@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-"""Testa o motor de passo SG90."""
+"""Testa o servo motor SG90."""
 
 
 import fake_RPi

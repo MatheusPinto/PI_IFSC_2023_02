@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-"""Testa o motor de passo SG90.
+"""Testa o serbo motor SG90.
 
 Testa três ao mesmo tempo.
 """
