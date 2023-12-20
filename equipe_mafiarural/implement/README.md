@@ -9,11 +9,25 @@
 
 ## Introdução
 
-Este documento detalha a implementação do projeto de um sistema de monitoramento de vazamento de gás de cozinha. O sistema será composto por um módulo central e módulos de sensoriamento. Na implementação atual, foi feito a implementação de um módulo central e um módulo de sensoriamento.
+Este documento detalha a implementação do projeto de um sistema de monitoramento de vazamento de gás de cozinha. O sistema será composto por um módulo central e módulos de sensoriamento. 
+
+## Sobre o desenvolvimento do projeto 
+
+Na implementação atual, os requisitos prometidos no decorrer do método CDIO foram cumpridos: As *features* principais e extras de slot disponível para cartão SD, aplicativo para celular, bateria externa, internet necessária apenas para o módulo central e possibilidade de acionamento de cargas através de relés foram implementadas. Os testes realizados para alcançar os resultados foram bem sucedidos.
+
+Durante o desenvolvimento algumas melhorias foram sendo feitas, como a implementação de setores de status nas placas, impressão de cases para as placas, mudança da escolha de bateria para uma de maior capacidade e de sensores MQ-2 para MQ-5/6/7 para melhor acurácia e gama de detecção, entre outras.
+
+Houve também a mudança de abordagem em relação ao softare. A ideia inicial era comunicar os ESPs via protocolo ESPNOW. Posteriormente foi descoberto o servidor ThingSpeak, que serve como um banco de dados para os dados coletados pelos módulos de sensoriamento. Por conta da inscrição paga do servidor, foi decidido utilizar o protocolo ESPNOW em conjunto com MQTT e o aplicativo MQTT Dashboard para mostrar gráficos dos sensores e acionar os relés remotamente.
+
+O projeto foi o mais otimizado possível pela equipe: Módulos comerciais (134N3P e sensores MQ) foram dessoldados de suas placas originais e reimplementados em uma placa única, poupando conexões e deixando o projeto mais compacto. A equipe também optou por utilizar um microcontrolador ESP32 para o módulo central e para o módulo sensor, assim reduzindo o custo do projeto e aumentando a compatibilidade entre os módulos.
+
+
 
 ## Módulo Central
 
-O módulo central é responsável por receber os dados dos módulos de sensoriamento e transmitir os logs de monitoramento para o servidor responsável por realizar a coleta e análise dos dados. O módulo central é composto por um microcontrolador ESP32, com acesso à rede WiFi, e com extensão para se conectar a uma matriz de relés de 8 canais e uma interface para cartão microSD para armaenamento dos logs de monitoramento.
+**De acordo com o acordado na etapa de concepção**, o módulo central é responsável por receber os dados dos módulos de sensoriamento e transmitir os logs de monitoramento para o servidor responsável por realizar a coleta e análise dos dados. O módulo central é composto por um microcontrolador ESP32, com acesso à rede WiFi, e com extensão para se conectar a uma matriz de relés de 8 canais e uma interface para cartão microSD para armazenamento dos logs de monitoramento.
+
+
 
 ### Da implementação da placa de circuito impresso
 
@@ -42,7 +56,7 @@ A priori a equipe utilizou uma única célula de bateria de lítio de 3.7V conve
 
 <img src="./docs/batteries/prototype.jpg" height="300px"/>
 
-Apó s a análise do primeiro protótipo, a equipe optou por utilizar uma bateria de lítio de 3.7V de alta capacidade, a bateria foi retirada de um banco de baterias de um notebook dell vostro 5470 que estava inutilizado, a bateria deste notebook é composta de 3 células de bateria de lítio, central é composta de 2 células de bateria de lítio em paralelo, aumentando a capacidade da bateria.
+Após a análise do primeiro protótipo, a equipe optou por utilizar uma bateria de lítio de 3.7V de alta capacidade, a bateria foi retirada de um banco de baterias de um notebook dell vostro 5470 que estava inutilizado, a bateria deste notebook é composta de 3 células de bateria de lítio, central é composta de 2 células de bateria de lítio em paralelo, aumentando a capacidade da bateria.
 
 ##### Bateria de lítio de 3.7V de alta capacidade utilizada no segundo protótipo
 
@@ -55,6 +69,8 @@ Para os primeiros testes foi utilizado um carregador externo para averiguar se a
 <img src="./docs/batteries/external_charging.jpg" height="300px"/>
 
 ### Setor de status
+
+**Durante o desenvolvimento, foi decidido que um setor de status seria útil para fornecer informações do estado do módulo central, para haver pistas de qual pode ser o erro caso haja algum mal funcionamento durante os testes da placa.**
 
 O setor de status é responsável por fornecer informações sobre o estado do módulo central, o setor de status é composto por 3 leds, um led vermelho e 2 leds verdes. Estes leds possuem propósito geral e estão conectados a GPIOs do microcontrolador ESP32.
 
@@ -71,7 +87,7 @@ O setor de controle é responsável por acionar os relés da matriz de relés, o
 
 ### Setor MicroSD
 
-O setor MicroSD é responsável por fornecer uma interface para cartão microSD para armazenamento dos logs de monitoramento, o setor MicroSD é composto por uma interface para cartão microSD e microcontrolador ESP32 usando o SPI do microcontrolador ESP32.
+**Como sugerido no conceive**, o setor MicroSD é responsável por fornecer uma interface para cartão microSD para armazenamento dos logs de monitoramento, o setor MicroSD é composto por uma interface para cartão microSD e microcontrolador ESP32 usando o SPI do microcontrolador ESP32.
 
 #### MicroSD shield utilizado
 
@@ -175,30 +191,210 @@ $$
 
 Como pode ser visto, a dissipação no ceário de estresse máximo é alta, assim a equipe optou por utilizar uma fonte de 6.5V para reduzir a dissipação de calor no regulador de tensão LM7805.
 
-### Do case do módulo central
+### Módulo Central Montado
 
-....
-
-#### Projeto 3D do case do módulo central no software de modelagem Blender
-
-....
-
-#### Projeto 3D do case do módulo central no software Cura3D para fatiamento
-
-....
-
-#### Case do módulo central em completo
-
-....
-
-#### Módulo central completamente montado
-
-....
+<img src="./docs/central/central_complete.jpeg">
+<img src="./docs/central/central_board.jpeg">
 
 #### Software do módulo central
 
-....
+O projeto do módulo central, executado no ESP32 WROOM e utilizando a biblioteca painlessMesh para comunicação na mesh e PubSub para a conexão com o broker MQTT, é um sistema complexo que gerencia uma variedade de funções, incluindo comunicação de rede, interação com hardware, e processamento de regras. No geral o código se divide nas seguitnes implementações
 
+##### 1. app.cpp e app.h
+Estes arquivos definem a lógica principal da aplicação do módulo central. O arquivo `app.h` declara a classe principal, incluindo inicialização, gestão de tarefas, e interação com outros componentes do sistema. O `app.cpp` implementa estas funcionalidades.
+
+##### 2. common.h
+Contém definições comuns e configurações gerais utilizadas em todo o projeto. Pode incluir constantes, definições de tipos de dados, e parâmetros de configuração.
+
+##### 3. flash.cpp e flash.h
+Responsáveis pela gestão e conexão com o módulo SD. Esses arquivos podem implementar funcionalidades para salvar e recuperar configurações ou dados persistentes.
+
+##### 4. hardware.h
+Define a configuração de hardware do módulo central. Inclui definições para pinos de I/O, configurações de sensores e outros dispositivos periféricos conectados ao ESP32.
+
+##### 5. main.ino
+O ponto de entrada principal para o firmware do ESP32. Este arquivo inicializa o sistema e entra em um loop de execução, chamando funções de gestão definidas em outros arquivos.
+
+##### 6. mqtt.cpp e mqtt.h
+Implementam a funcionalidade MQTT, um protocolo de mensagens leve para comunicação entre dispositivos. Esses arquivos podem gerenciar a conexão com um broker MQTT para enviar ou receber dados.
+
+##### 7. network.cpp e network.h
+Gerenciam a conectividade de rede do módulo central, incluindo a comunicação com outros módulos via painlessMesh. Esses arquivos lidam com a criação e manutenção da rede mesh, além do processamento de mensagens recebidas.
+
+##### 8. relay.cpp e relay.h
+Esses arquivos podem controlar relés ou outros dispositivos de comutação conectados ao módulo central, permitindo controlar cargas elétricas ou outros dispositivos externos.
+
+##### 9. rules.cpp e rules.h
+Contêm a lógica para processar "regras" - condições ou scripts que definem como o módulo central deve reagir a determinados inputs ou dados de sensores.
+
+##### 10. serial.h
+Pode ser usado para configurar e gerenciar a comunicação serial, útil para depuração, configuração, ou interação com dispositivos que usam comunicação serial.
+
+##### 11. status.cpp e status.h
+Gerenciam o status do sistema, possivelmente lidando com LEDs de indicação, logs, ou outras formas de feedback do estado do sistema.
+
+##### Base de Implementação e Operação
+
+O projeto é um sistema central de controle e monitoramento. Ele recebe dados de módulos sensoriais (como os que medem a qualidade do ar), processa esses dados (aplicando regras carregadas do SD e processadas em `rules.cpp/h`), e pode agir com base nesses dados (ativando relés, por exemplo). A comunicação entre o módulo central e os módulos sensoriais é realizada através de uma rede mesh painlessMesh, permitindo uma comunicação eficiente e flexível em ambientes com múltiplos dispositivos. A capacidade de armazenamento e recuperação de dados (flash.cpp/h) e a conectividade MQTT que permite ao sistema capacidade de interagir com uma infraestrutura de IoT mais ampla, como um servidor em nuvem ou um sistema de automação residencial.
+
+#### Dos arquivos de configuração da central a serem carregados no SD
+
+A central espera encontrar os arquivos organizados da seguinte forma:
+
+```
+/rules/
+  - node.sensor.gas.json
+  - node.sensor.ligth.json
+/config.json
+```
+
+O arquivo de configuração fuciona da seguinte forma:
+
+```
+{
+	"wifi": {
+		"ssid": "some_ssid",
+		"password": "some_password",
+		"hostname": "some-hostname"
+	},
+	"mqtt": {
+		"host": "test.mosquitto.org",
+		"port": 1883,
+		"uniqueId": "abea99585f8a48f9",
+		"topics": {
+			"relay": {
+				"1": {
+					"in": "relay/73f84c51/in",
+					"out": "relay/73f84c51/out"
+				},
+				"2": {
+					"in": "relay/a7af0637/in",
+					"out": "relay/a7af0637/out"
+				},
+				"3": {
+					"in": "relay/0b766ff0/in",
+					"out": "relay/0b766ff0/out"
+				},
+				"4": {
+					"in": "relay/153fb673/in",
+					"out": "relay/153fb673/out"
+				},
+				"5": {
+					"in": "relay/9151494d/in",
+					"out": "relay/9151494d/out"
+				},
+				"6": {
+					"in": "relay/8cf58bc7/in",
+					"out": "relay/8cf58bc7/out"
+				},
+				"7": {
+					"in": "relay/22551182/in",
+					"out": "relay/22551182/out"
+				}
+			},
+			"validator": {
+				"in": "validator/bf7879d9/in",
+				"out": "validator/bf7879d9/out"
+			}
+		}
+	},
+	"startup": {
+		"relay": 2
+	}
+}
+```
+
+Este arquivo de configuração define as configurações para um sistema usar conexão Wi-Fi e MQTT para comunicação. Cada seção do arquivo configura um aspecto diferente do sistema:
+
+##### Seção "wifi"
+Esta seção configura as credenciais e parâmetros para a conexão Wi-Fi do dispositivo.
+- **ssid**: O nome da rede Wi-Fi à qual o dispositivo se conectará.
+- **password**: A senha da rede Wi-Fi.
+- **hostname**: O nome do host para o dispositivo na rede, útil para identificação em redes locais.
+
+##### Seção "mqtt"
+Configurações para a comunicação do dispositivo usando o protocolo MQTT (Message Queuing Telemetry Transport), um protocolo de mensagens leve usado em dispositivos de Internet das Coisas (IoT).
+- **host**: O endereço do servidor MQTT (broker) ao qual o dispositivo se conectará. Aqui, "test.mosquitto.org" é um broker MQTT público.
+- **port**: A porta de rede usada para conectar ao servidor MQTT. A porta 1883 é o padrão para conexões MQTT não criptografadas.
+- **uniqueId**: Um identificador único para o dispositivo. Isso pode ser usado para identificar o dispositivo no broker MQTT.
+- **topics**: Define os tópicos MQTT para interação com o dispositivo. Os tópicos são usados para publicar e receber mensagens.
+    - **relay**: Cada número de relay (1 a 7) tem tópicos "in" e "out". 
+        - **"in"**: Tópico usado para receber comandos ou dados para o relay correspondente.
+        - **"out"**: Tópico para publicar dados ou status do relay.
+    - **validator**: Possui também tópicos "in" e "out" para algum tipo de validação ou funcionalidade específica.
+
+##### Seção "startup"
+Configurações iniciais ao ligar o dispositivo.
+- **relay**: Indica uma bitmask de 8 bits, ou seja um uint8_t que será comparado para acionar os relés correspondes, por exemplo 0b00000001 irá acionar o primeiro relé, ao passo que 0b00001001 irá acionar o primeiro e o quarto relé.
+
+#### Dos aqruivos em rules a serem carregados no SD
+
+Os arquivos são basicamente match cases e condicionais de disparos para sensores genéricos, eles são baseados nas definições dos módulos de sensores a seguir:
+
+BOARD_TYPE "node"
+BOARD_SENSOR_TYPE "sensor/gas"
+
+Nesse exemplo, o validador tentará carregar uma regra node.sensor.gas.json dentro da pasta rules. Um exemplo de regra segue:
+
+```
+{
+	"id": "node.sensor.gas",
+	"name": "Gas Sensor Triggered",
+	"condition": {
+		"mq5": {
+			"value": 50,
+			"comparator": ">",
+			"action": 4
+		},
+		"mq6": {
+			"value": 50,
+			"comparator": ">",
+			"action": 28
+		},
+		"mq7": {
+			"value": 50,
+			"comparator": ">",
+			"action": 16
+		}
+	}
+}
+```
+
+Esta regra de disparo define condições específicas para quando certos eventos relacionados a sensores devem serem disparados:
+
+### Geral
+- **id**: "node.sensor.gas" - Identifica a regra
+- **name**: "Gas Sensor Triggered" - Nome descritivo da regra
+
+### Condições Específicas para Cada Sensor de Gás
+A seção "condition" lista condições para diferentes sensores de um mesmo módulo de sensoriamento. Cada sensor tem um conjunto de parâmetros que definem quando a condição é verdadeira.
+
+#### Para cada sensor (MQ5, MQ6, MQ7):
+- **value**: 50 - Este é o valor de limiar para a condição. A regra compara a leitura do sensor com este valor.
+- **comparator**: ">" - Este é o operador de comparação. Neste caso, a condição é verdadeira se a leitura do sensor for maior que o valor de limiar.
+- **action**: Indica uma bitmask de 8 bits, ou seja um uint8_t que será comparado para acionar os relés correspondes, por exemplo 0b00000001 irá acionar o primeiro relé, ao passo que 0b00001001 irá acionar o primeiro e o quarto relé.
+
+### Funcionamento da Regra
+Quando a regra é avaliada:
+- Se a leitura do sensor MQ5 for maior que 50, a ação 4 (0b00000100) será acionada.
+- Se a leitura do sensor MQ6 for maior que 50, a ação 28 (0b00010000) será acionada.
+- Se a leitura do sensor MQ7 for maior que 50, a ação 16 (0b00001000) será acionada.
+
+Essencialmente, esta regra define um conjunto de condições de disparo baseadas nas leituras dos sensores, onde cada condição, se atendida, resulta em uma ação específica.
+
+### Complexidades de utilização do painlessMesh (Rede Mesh) em conjunto com PubSub (MQTT)
+
+Dado o fato que ambos sistemas utilizam o hardware WiFi do ESP32, a utilização de ambos sistemas em conjunto pode causar problemas devido ao fato de utilizarem Schedulers e de ambos sistemas terem um carater asíncrono porém com alguns métodos contendo block do processamento.
+Para fazer a utilização do PubSub com a painlessMesh, necessita que se faça a inicialização na seguinte forma.
+
+* Primeiramente garanta de criar a rede mesh e seu scheduler.
+* Após isso sete os callbacks na parte de mesh da network como onReceive, onNewConnection, onChangedConnections e onNodeTimeAdjusted.
+* Após isso faça a configuração de tipos de mensagnes para debug setDebugMsgTypes e inicialize a rede mesh com o método init na seguinte forma init(MESH_PREFIX, MESH_PASSWORD, &m_AppScheduler, MESH_PORT, WIFI_AP_STA)
+* Com isso realizado, faça a configuração manual da estação de wifi usando mesh.stationManual e mesh.setHostname
+* Com o WiFi configurado faça a configuração do broker MQTT usando setServer e setCallback
+* Por fim habilite duas tasks, uma responsável por chamar o método loop do cliente mqtt e outra responsável para chamar a connect do cliente mqtt caso não esteja conectado.
+* Com isso feito sete o nó como raiz setRoot e notifique os outros nós da presença de um nó raiz setContainsRoot
+* Após isso, apenas aguarde o método connect da task de conexão do cliente mqtt conectar ao broker e pronto, bast se inscrever nos tópicos que deseja escutar e ou publicar.
 
 ## Módulo Sensor
 
@@ -313,4 +509,70 @@ O case do módulo sensor foi projetado para ser impresso em 3D, o case é compos
 
 <img src="./docs/sensor/case/3d_printing2.jpg" height="300px">
 
+### Módulo Central Montado
 
+<img src="./docs/sensor/sensor_complete.jpeg">
+
+### Software do módulo sensor
+
+O software do módulo sensor desenvolvido tem como alvo o microcontrolador ESP32 WROOM, este projeto tira proveito de suas capacidades robustas de processamento e conectividade. A comunicação entre o módulo sensor e o módulo central é estabelecida utilizando a biblioteca painlessMesh, uma escolha estratégica que proporciona uma rede mesh auto-organizável e flexível.
+
+O conjunto de arquivos do projeto sensor inclui:
+
+1. **app.cpp e app.h**: Contém a lógica principal da aplicação, gerenciando o fluxo de operações e a integração dos diversos componentes do sistema.
+
+2. **common.h**: Este arquivo é um repositório central para definições e funções comuns, promovendo a reutilização de código e a manutenção simplificada.
+
+3. **hardware.h**: Especificamente destinado à interface com o hardware, este arquivo contem definições de pinos, configurações de dispositivos e funções de baixo nível.
+
+4. **main.ino**: O ponto de entrada principal do programa, responsável por inicializar o sistema e direcionar o ciclo principal de operações.
+
+5. **network.cpp e network.h**: Gerenciam todas as funcionalidades relacionadas à rede, incluindo a comunicação via painlessMesh, garantindo uma conexão estável e eficiente com o módulo central.
+
+6. **sensing.cpp e sensing.h**: Esses arquivos são focados na aquisição e processamento dos dados de gás, transformando leituras brutas em informações úteis.
+
+7. **status.cpp e status.h**: Oferecem funcionalidades para monitorar e reportar o estado do sistema utilizando os LEDs presentes no projeto do módulo sensor, facilitando a detecção de problemas e a manutenção preventiva.
+
+#### Fluxo Geral
+
+Cada um desses arquivos desempenha um papel crucial na garantia de que o módulo sensor funcione conforme o esperado, oferecendo uma solução robusta e eficiente para monitoramento de gases.
+
+Os arquivos `app.h`, `app.cpp`, `common.h`, `hardware.h` e `main.ino` formam a espinha dorsal do software de um módulo sensor para monitoramento de gases, projetado para o microcontrolador ESP32 WROOM e utilizando a biblioteca painlessMesh para comunicação em rede.
+
+##### 1. main.ino
+Este é o ponto de entrada do programa. Ele instancia um objeto da classe `Application` e invoca seus métodos `Setup` e `Loop`. Esses métodos são responsáveis por inicializar e manter o ciclo principal de operações do módulo.
+
+##### 2. app.h
+Este arquivo define a classe `Application`, que atua como o núcleo do software. Esta classe encapsula a lógica de inicialização, gestão de tarefas periódicas e a coordenação entre diferentes módulos como rede, sensores e status.
+
+##### 3. app.cpp
+Este arquivo implementa os métodos da classe `Application`. Na construção, ele inicializa vários componentes (status, sensing, network) e configura uma tarefa (m_AppTask) para ser executada periodicamente. O método `Setup` inicializa o serial (se o debug estiver habilitado) e configura a rede mesh. O método `RunApp` lê dados dos sensores e envia para a rede mesh.
+
+##### 4. common.h
+Contém definições comuns usadas em todo o projeto. Inclui configurações para debug, parâmetros da rede mesh, e identificadores únicos para o dispositivo. Essas definições fornecem uma base para a personalização e configuração do módulo sensor.
+
+##### 5. hardware.h
+Define os aspectos físicos e as configurações de hardware do módulo, como os pinos dos sensores de gás (MQ-5, MQ-6, MQ-7) e LEDs de status. Este arquivo é crucial para mapear as funcionalidades do software aos componentes físicos do dispositivo.
+
+#### Fluxo geral do software de rede dos sensores
+
+Os arquivos `network.h` e `network.cpp` formam a base para a gestão da rede do módulo sensor, utilizando a biblioteca painlessMesh para criar e gerenciar uma rede mesh. Esses arquivos definem a lógica para enviar dados dos sensores, buscar um nó mestre na rede, e lidar com a recepção de mensagens de outros nós.
+
+### Estrutura de Mensagens
+- `MessageSensorData`: Estrutura para armazenar e enviar os dados dos sensores MQ5, MQ6, e MQ7, incluindo seus históricos de valores.
+
+### Classe NetWork
+- **Construtor e Destrutor**: Configuram as funções de callback para diferentes eventos de rede, como recebimento de mensagens, novas conexões, alterações de conexão e ajustes de tempo.
+- **SendData**: Envio dos dados dos sensores. Verifica se existe um nó mestre conectado. Se não, inicia a busca por um mestre. Empacota os dados em um documento JSON e os envia para o nó mestre.
+- **SearchMaster**: Busca um nó mestre na rede mesh, enviando uma mensagem de broadcast.
+- **OnReceive**: Callback para o recebimento de mensagens. Analisa o tipo de mensagem recebida e, se for uma resposta de um nó mestre, chama `OnFoundMasterMessage`.
+- **OnNewConnection, OnChangedConnection, OnNodeTimeAdjusted**: Callbacks para eventos de rede, utilizados principalmente para fins de debug e monitoramento do estado da rede.
+
+### Operação Geral
+1. **Inicialização**: Ao ser instanciada, a classe `NetWork` configura os callbacks para eventos relevantes da rede mesh.
+2. **Envio de Dados**: Regularmente, o módulo tenta enviar os dados dos sensores para o nó mestre. Se o mestre não for conhecido ou estiver desconectado, ele inicia a busca por um novo mestre.
+3. **Busca por Mestre**: Se não houver um mestre conectado, o módulo envia um broadcast para encontrar um novo mestre, recebendo eventualmente uma resposta que identifica o nó mestre.
+4. **Recebimento de Mensagens**: Ao receber mensagens, o módulo processa o conteúdo. Se a mensagem for uma resposta de um nó mestre, o módulo atualiza seu ID mestre e altera seu status.
+5. **Monitoramento de Conexão**: Os callbacks para novas conexões, alterações de conexão e ajustes de tempo oferecem visibilidade sobre o estado da rede mesh, essencial para manter a estabilidade e eficiência da rede.
+
+Essa estrutura de rede permite que o módulo sensor se comunique eficientemente dentro de uma rede mesh, adaptando-se a mudanças na topologia da rede e garantindo a entrega de dados de sensoriamento de forma confiável.
