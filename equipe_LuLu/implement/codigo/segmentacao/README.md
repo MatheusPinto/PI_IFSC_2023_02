@@ -36,6 +36,14 @@ A criação do modelo foi feita usando o script [cria_modelo.py](cria_modelo.py)
 
 Após isso, é necessário converter o modelo para o formato ftlite para poder ser usado pelo interpretador. Para isso, há o script [converte_tflite.py](converte_tflite.py).
 
-Foi dessa forma que os modelos foram treinados, tanto o mobilenetV3 quanto o uNET. Como arquivos dos modelos são relativamente grandes para o Github mais de 50M. Optou-se por colocá-los no Google Drive e disponibilizar um Link para baixá-los. Para usá-los nesse projeto, basta renomeá-los para "modelo-segmentacao.tflite" e colocá-los o diretório corrente.
+Foi dessa forma que os modelos foram treinados, tanto o mobilenetV3 quanto o uNET. Inicial, foi treinado apenas para paredes verdes pensando nos corredores do IFSC. Depois, o uNET foi treinado para outros ambientes. Isso inclui salas com pisos brancos como o LPAE (Laboratório de Pesquisa Avançada em Eletrônica) do IFSC (Instituto Federal de Santa Catarina) campus Florianópolis. Além de salas chão cinza, como o SMM1 (sala multimídia 1) do mesmo instituto.
+
+Os resultados podem ser observados abaixo:
+
+![LPAE](img/LPAE.png)
+
+![SMM1](img/SMM1.png)
+
+Como alguns arquivos dos modelos são relativamente grandes para o Github mais de 50M. Optou-se por colocá-los no Google Drive e disponibilizar um Link para baixá-los. Para usá-los nesse projeto, basta renomeá-los para "modelo-segmentacao.tflite" e colocá-los o diretório corrente. O modelo que funciona tanto para paredes verdes quanto para o LPAE e SMM1 está disponível no arquivo [modelo-segmentacao.tflite](modelo-segmentacao.tflite) porque ocupa pouco espaço de memória (4,5 MiB).
 
 [Link modelos](https://drive.google.com/drive/folders/1dwD33YQNWmXR4oi_z7RVapRyitmweZZ_?usp=drive_link)

@@ -7,6 +7,6 @@
 
 <a id="module-codigo.movimento.teste_validacao.testa_sg90_todos"></a>
 
-Testa o motor de passo SG90.
+Testa o serbo motor SG90.
 
 Testa três ao mesmo tempo.

@@ -12,7 +12,7 @@ Módulo de controle dos motores.
 Implementa duas classes:
 
 * [`DC`](#codigo.movimento.modulos.motores.DC): controla os motores DC por meio de uma ponte H L298N.
-* [`Passo`](#codigo.movimento.modulos.motores.Passo): controla os servo motores.
+* [`Servo`](#codigo.movimento.modulos.motores.Servo): controla os servo motores.
 
 <a id="codigo.movimento.modulos.motores.DC"></a>
 
@@ -93,9 +93,9 @@ contrária (para trás).
 * **Parâmetros:**
   **velocidade** ([*float*](https://docs.python.org/3/library/functions.html#float)) – A velocidade do motor esquerdo.
 
-<a id="codigo.movimento.modulos.motores.Passo"></a>
+<a id="codigo.movimento.modulos.motores.Servo"></a>
 
-### *class* codigo.movimento.modulos.motores.Passo(pino: [int](https://docs.python.org/3/library/functions.html#int), passos: [float](https://docs.python.org/3/library/functions.html#float))
+### *class* codigo.movimento.modulos.motores.Servo(pino: [int](https://docs.python.org/3/library/functions.html#int), passos: [float](https://docs.python.org/3/library/functions.html#float))
 
 Base: [`object`](https://docs.python.org/3/library/functions.html#object)
 
@@ -106,8 +106,8 @@ Ao inicializar, deve ser fornecido o pino GPIO usado para controlar o motor.
 A mudança de ângulo do servo motor ocorre gradualmente. Ou sejá, ele não muda de 120° direto
 para 180°, mas sim em passos. O valor desses passos são configurados na inicialização do objeto.
 
-Para definir o ângulo do motor, use o método [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.define_angulo_destino) e, para atualizar o ângulo
-do motor, use o método [`atualiza_angulo()`](#codigo.movimento.modulos.motores.Passo.atualiza_angulo). A atualização deve ser feita em intervalos de tempo de
+Para definir o ângulo do motor, use o método [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.define_angulo_destino) e, para atualizar o ângulo
+do motor, use o método [`atualiza_angulo()`](#codigo.movimento.modulos.motores.Servo.atualiza_angulo). A atualização deve ser feita em intervalos de tempo de
 forma que não cause mudanças bruscas no ângulo do motor.
 
 Para verificar os ângulos relacionados ao servo motor, há dois métodos:
@@ -115,7 +115,7 @@ Para verificar os ângulos relacionados ao servo motor, há dois métodos:
 * retorna_angulo_atual(): retorna o ângulo atual do servo motor.
 * retorna_angulo_destino(): retorna o ângulo para qual o servo motor está se direcionando.
 
-<a id="codigo.movimento.modulos.motores.Passo.__init__"></a>
+<a id="codigo.movimento.modulos.motores.Servo.__init__"></a>
 
 #### \_\_init_\_(pino: [int](https://docs.python.org/3/library/functions.html#int), passos: [float](https://docs.python.org/3/library/functions.html#float))
 
@@ -125,15 +125,15 @@ Deve ser fornecido o número do *pino* usado para controlar o servo motor. E o n
 que serão somados quando o ângulo do motor for atualizado.
 
 Os *passos* são informados em graus. Por exemplo, se passos=3, então sempre que o servo motor
-for atualizado pelo método [`atualiza_angulo()`](#codigo.movimento.modulos.motores.Passo.atualiza_angulo) será somado 3 graus ao ângulo atual, até alcançar
-o ângulo de destino definido por [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.define_angulo_destino).
+for atualizado pelo método [`atualiza_angulo()`](#codigo.movimento.modulos.motores.Servo.atualiza_angulo) será somado 3 graus ao ângulo atual, até alcançar
+o ângulo de destino definido por [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.define_angulo_destino).
 
 * **Parâmetros:**
   * **pino** ([*int*](https://docs.python.org/3/library/functions.html#int)) – O pino GPIO que controla o servo motor.
   * **angulo_inicial** ([*float*](https://docs.python.org/3/library/functions.html#float)) – O ângulo inicial do servo motor.
   * **passos** ([*float*](https://docs.python.org/3/library/functions.html#float)) – O número de passos que serão somados quando o ângulo do motor for atualizado.
 
-<a id="codigo.movimento.modulos.motores.Passo._converte_duty_para_graus"></a>
+<a id="codigo.movimento.modulos.motores.Servo._converte_duty_para_graus"></a>
 
 #### \_converte_duty_para_graus(duty_cycle: [float](https://docs.python.org/3/library/functions.html#float))
 
@@ -142,7 +142,7 @@ Converte o duty cycle do PWM usado pelo motor SG90 para o angulo em graus.
 * **Parâmetros:**
   **duty_cycle** ([*float*](https://docs.python.org/3/library/functions.html#float)) – O duty cycle do PWM.
 
-<a id="codigo.movimento.modulos.motores.Passo._converte_graus_para_duty"></a>
+<a id="codigo.movimento.modulos.motores.Servo._converte_graus_para_duty"></a>
 
 #### \_converte_graus_para_duty(angulo: [float](https://docs.python.org/3/library/functions.html#float))
 
@@ -151,7 +151,7 @@ Converte o ângulo em graus para o duty cycle do PWM usado pelo motor SG90.
 * **Parâmetros:**
   **angulo** ([*float*](https://docs.python.org/3/library/functions.html#float)) – O angulo em graus.
 
-<a id="codigo.movimento.modulos.motores.Passo.atualiza_angulo"></a>
+<a id="codigo.movimento.modulos.motores.Servo.atualiza_angulo"></a>
 
 #### atualiza_angulo()
 
@@ -160,17 +160,17 @@ Atualiza o angulo atual do motor.
 O angulo do motor se ajustará gradualmente até alcançar o valor do ângulo de destino. Esse método atualiza
 o passo definido na instanciação da classe.
 
-O ângulo de destino é definido pelo método [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.define_angulo_destino). A atualização ocorre em
-passos definidos pelo parâmetro *passos* do método de inicialização da classe [`__init__()`](#codigo.movimento.modulos.motores.Passo.__init__):.
+O ângulo de destino é definido pelo método [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.define_angulo_destino). A atualização ocorre em
+passos definidos pelo parâmetro *passos* do método de inicialização da classe [`__init__()`](#codigo.movimento.modulos.motores.Servo.__init__):.
 
-<a id="codigo.movimento.modulos.motores.Passo.define_angulo_destino"></a>
+<a id="codigo.movimento.modulos.motores.Servo.define_angulo_destino"></a>
 
 #### define_angulo_destino(angulo: [float](https://docs.python.org/3/library/functions.html#float))
 
 Define o ângulo de destino do servo motor.
 
 O ângulo atual do servo motor se ajustará gradualmente até alcançar o valor definido pelo parâmetro *angulo*.
-Para realizar uma atualização, use o método [`atualiza_angulo()`](#codigo.movimento.modulos.motores.Passo.atualiza_angulo)
+Para realizar uma atualização, use o método [`atualiza_angulo()`](#codigo.movimento.modulos.motores.Servo.atualiza_angulo)
 
 O ângulo é informado em graus.
 
@@ -179,7 +179,7 @@ O ângulo é informado em graus.
 * **Tipo de retorno:**
   [float](https://docs.python.org/3/library/functions.html#float)
 
-<a id="codigo.movimento.modulos.motores.Passo.desliga"></a>
+<a id="codigo.movimento.modulos.motores.Servo.desliga"></a>
 
 #### desliga()
 
@@ -188,23 +188,23 @@ Desliga o servo motor.
 Desativa o PWM que controla os motor e libera a GPIO da Raspberry Pi utilizada. O objeto se torna
 inútil depois disso.
 
-<a id="codigo.movimento.modulos.motores.Passo.inicia"></a>
+<a id="codigo.movimento.modulos.motores.Servo.inicia"></a>
 
 #### inicia(angulo)
 
 Inicia o servo motor.
 
-<a id="codigo.movimento.modulos.motores.Passo.retorna_angulo_atual"></a>
+<a id="codigo.movimento.modulos.motores.Servo.retorna_angulo_atual"></a>
 
 #### retorna_angulo_atual()
 
 Retorna o ângulo atual do servo motor.
 
 É importante notar que, como o ângulo do servo motor varia gradualmente, o valor retornado por esse
-método não obrigatoriamente será o definido ao usar o método [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.define_angulo_destino). O ângulo atual
+método não obrigatoriamente será o definido ao usar o método [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.define_angulo_destino). O ângulo atual
 se ajustará gradualmente até chegar ao ângulo configurado por esse método.
 
-Se deseja ler o ângulo selecionado por [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.define_angulo_destino), use o método [`retorna_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.retorna_angulo_destino).
+Se deseja ler o ângulo selecionado por [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.define_angulo_destino), use o método [`retorna_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.retorna_angulo_destino).
 
 O ângulo é retornado em graus.
 
@@ -213,13 +213,13 @@ O ângulo é retornado em graus.
 * **Tipo de retorno:**
   [float](https://docs.python.org/3/library/functions.html#float)
 
-<a id="codigo.movimento.modulos.motores.Passo.retorna_angulo_destino"></a>
+<a id="codigo.movimento.modulos.motores.Servo.retorna_angulo_destino"></a>
 
 #### retorna_angulo_destino()
 
 Retorna o ângulo de destino do servo motor.
 
-Por exemplo, se foi usado a função [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Passo.define_angulo_destino) para definir 120°. Essa função retorna 120.
+Por exemplo, se foi usado a função [`define_angulo_destino()`](#codigo.movimento.modulos.motores.Servo.define_angulo_destino) para definir 120°. Essa função retorna 120.
 
 O ângulo é retornado em graus.
 

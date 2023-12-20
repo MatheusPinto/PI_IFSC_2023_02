@@ -160,7 +160,7 @@ def treina_modelo(
             )
 
     # Cria um log com todas as versões do modelo, mesmo as com menor acurácia.
-    i_treino = path + "log/treino-" + time.strftime("%Y-%b-%d-%Hh%M-%S")  # Índice do treinamento
+    i_treino = path + "log/treino-" + time.strftime("%Y-%m-%d-%Hh%Mmin-%Ss")  # Índice do treinamento
 
     if backbone:
         i_treino += "/epoca:{epoch:03d}-val_loss:{val_loss:.3f}"

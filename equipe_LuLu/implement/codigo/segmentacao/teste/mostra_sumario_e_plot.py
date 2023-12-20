@@ -22,7 +22,7 @@ if __name__ == "__main__":
     modelo = tf.keras.models.load_model(MODELO_PATH)
 
     # Gera o sumário e gráfico
-    m.summary(expand_nested=True)
+    modelo.summary(expand_nested=True)
     tf.keras.utils.plot_model(
             modelo,
             to_file=PLOT_PATH,
