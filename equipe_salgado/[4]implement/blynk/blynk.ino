@@ -1,23 +1,7 @@
-/*************************************************************
-
-  This example shows how value can be pushed from Arduino to
-  the Blynk App.
-
-  WARNING :
-  For this example you'll need Adafruit DHT sensor libraries:
-    https://github.com/adafruit/Adafruit_Sensor
-    https://github.com/adafruit/DHT-sensor-library
-
-  App dashboard setup:
-    Value Display widget attached to V5
-    Value Display widget attached to V6
- *************************************************************/
-
 /* Fill-in information from Blynk Device Info here */
 #define BLYNK_TEMPLATE_ID "TMPL2hDK5YqQo"
 #define BLYNK_TEMPLATE_NAME "Teste"
 #define BLYNK_AUTH_TOKEN "L-RXKJ_z_vb6QLuERlDHT_Zff05wGCAT"
-/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
 
@@ -27,10 +11,9 @@
 #include "Communication.h"
 Communication communication;
 
-// Your WiFi credentials.
-// Set password to "" for open networks.
-char ssid[] = "@fbarbozac";
-char pass[] = "84038051";
+// WiFi credentials.
+char ssid[] = "Mateus’s iPhone (2)";
+char pass[] = "salgado1";
 
 BlynkTimer timer;
 
@@ -75,7 +58,10 @@ void recieveProtocol() {
       Blynk.virtualWrite(V7, message.pwm);
       Blynk.virtualWrite(V6, message.sensor);
       Blynk.virtualWrite(V5, message.tsh);
+      
       estufa.temperatura.sensor = message.sensor;
+      estufa.temperatura.pwm = message.pwm;
+      
       break;
 
     // iluminacao
@@ -83,7 +69,10 @@ void recieveProtocol() {
       Blynk.virtualWrite(V8, message.pwm);
       Blynk.virtualWrite(V1, message.sensor);
       Blynk.virtualWrite(V2, message.tsh);
+      
       estufa.luminosidade.sensor = message.sensor;
+      estufa.luminosidade.pwm = message.pwm;
+
       break;
 
     // agua
@@ -91,7 +80,10 @@ void recieveProtocol() {
       Blynk.virtualWrite(V0, message.pwm);
       Blynk.virtualWrite(V3, message.sensor);
       Blynk.virtualWrite(V4, message.tsh);
+      
       estufa.nivel.sensor = message.sensor;
+      estufa.luminosidade.pwm = message.pwm;
+      
       break;
 
     default:
@@ -178,7 +170,6 @@ void setup()
 
   defaultStartup(estufa); 
   
-  // Setup a function to be called every second
   timer.setInterval(1000L, recieveProtocol);
 }
 

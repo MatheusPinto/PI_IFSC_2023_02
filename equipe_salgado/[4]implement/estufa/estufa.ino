@@ -10,11 +10,11 @@ SensorController sensorController(LDRpin, T1592vcc, T1592pin, DHTpin);
 DHT dht(DHTpin, DHTTYPE);
 
 #include "DeviceController.h"
-#define COOLERpin1 2
-#define COOLERpin2 4
+#define COOLERpin1 4
+#define COOLERpin2 2
 #define COOLERpwm 3
-#define LEDpin1 6
-#define LEDpin2 7
+#define LEDpin1 7
+#define LEDpin2 6
 #define LEDpwm 5
 #define BOMBApin 50
 DeviceController deviceController(COOLERpin1, COOLERpin2, COOLERpwm, LEDpin1, LEDpin2, LEDpwm, BOMBApin);
@@ -97,6 +97,11 @@ Estufa recieveProtocol(Estufa estufa, bool debug) {
     case 0:
       estufa.temperatura.tsh = message.tsh;
       estufa.temperatura.pwm = message.pwm;
+
+      if(estufa.temperatura.tsh < estufa.temperatura.sensor){
+        estufa.temperatura.pwm = 130;
+        deviceController.controlDevice(message.device, estufa.temperatura.pwm);
+      }
       
       break;
 
@@ -104,12 +109,24 @@ Estufa recieveProtocol(Estufa estufa, bool debug) {
     case 1:
       estufa.luminosidade.tsh = message.tsh;
       estufa.luminosidade.pwm = message.pwm;
+      
+      if(estufa.luminosidade.tsh > estufa.luminosidade.sensor){
+        estufa.luminosidade.pwm = 100;
+        deviceController.controlDevice(message.device, estufa.luminosidade.pwm);
+      }
+      
       break;
 
     // agua
     case 10:
       estufa.nivel.tsh = message.tsh;
       estufa.nivel.pwm = message.pwm;
+
+      if(estufa.nivel.tsh < estufa.nivel.sensor){
+        estufa.nivel.pwm = 100;
+        deviceController.controlDevice(message.device, estufa.nivel.pwm);
+      }
+      
       break;
 
     default:
@@ -122,8 +139,6 @@ Estufa recieveProtocol(Estufa estufa, bool debug) {
 
 void sendStatus(Estufa estufa, bool debug) {
   SensorController::SensorValues sensor = sensorController.readAllSensors(debug);
-  
-  
   
   message.device = 0;
   message.pwm = estufa.temperatura.pwm;

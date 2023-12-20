@@ -43,11 +43,11 @@ void DeviceController::controlDevice(int device, int pwm) {
 
     // agua
     case 10:
-      if (pwm == 0) {
-        digitalWrite(BOMBApin, LOW);
-        } 
-      else if (pwm > 0) {
+      if (pwm > 0) {
         digitalWrite(BOMBApin, HIGH);
+        }
+      else{
+        digitalWrite(BOMBApin, LOW);
         }
       break;
       
