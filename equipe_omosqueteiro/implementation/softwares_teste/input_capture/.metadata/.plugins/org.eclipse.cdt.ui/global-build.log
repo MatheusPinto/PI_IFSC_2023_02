@@ -1,0 +1,21 @@
+21:00:46 **** Incremental Build of configuration Debug for project input_capture ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "input_capture.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\marce\Documents\STM32 TESTES\input_capture\input_capture\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="input_capture.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: input_capture.elf
+ 
+arm-none-eabi-size   input_capture.elf 
+arm-none-eabi-objdump -h -S  input_capture.elf  > "input_capture.list"
+   text	   data	    bss	    dec	    hex	filename
+  25568	    476	   2068	  28112	   6dd0	input_capture.elf
+Finished building: default.size.stdout
+ 
+Finished building: input_capture.list
+ 
+21:00:48 **** Incremental Build of configuration Debug for project input_capture ****
+make -j16 all 
+arm-none-eabi-size   input_capture.elf 
+   text	   data	    bss	    dec	    hex	filename
+  25568	    476	   2068	  28112	   6dd0	input_capture.elf
+Finished building: default.size.stdout
+ 

@@ -1,0 +1,21 @@
+19:23:11 **** Incremental Build of configuration Debug for project gps_neo6m ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "gps_neo6m.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\marce\Documents\STM32 TESTES\gps_neo6m\gps_neo6m\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="gps_neo6m.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: gps_neo6m.elf
+ 
+arm-none-eabi-size   gps_neo6m.elf 
+arm-none-eabi-objdump -h -S  gps_neo6m.elf  > "gps_neo6m.list"
+   text	   data	    bss	    dec	    hex	filename
+  32576	    504	   3456	  36536	   8eb8	gps_neo6m.elf
+Finished building: default.size.stdout
+ 
+Finished building: gps_neo6m.list
+ 
+19:23:44 **** Incremental Build of configuration Debug for project gps_neo6m ****
+make -j16 all 
+arm-none-eabi-size   gps_neo6m.elf 
+   text	   data	    bss	    dec	    hex	filename
+  32576	    504	   3456	  36536	   8eb8	gps_neo6m.elf
+Finished building: default.size.stdout
+ 
